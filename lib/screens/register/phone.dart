@@ -36,7 +36,7 @@ class _RegisterPhoneScreenState extends State<RegisterPhoneScreen> {
 
     Toast.show(
       'Hãy nhập mã OTP được gửi đến số điện thoại của bạn',
-      duration: 2,
+      duration: 5,
     );
     await Future.delayed(const Duration(seconds: 2));
 
@@ -69,119 +69,126 @@ class _RegisterPhoneScreenState extends State<RegisterPhoneScreen> {
     Toast.initialize(context);
 
     return Scaffold(
-      resizeToAvoidBottomInset: true,
-      body: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
+      resizeToAvoidBottomInset: false,
+      body: SingleChildScrollView(
         child: SizedBox(
           height: MediaQuery.of(context).size.height,
-          child: Column(
-            children: [
-              Expanded(
-                child: Container(
-                  padding: const EdgeInsets.all(AppSpace.xl),
-                  child: Column(
+          width: MediaQuery.of(context).size.width,
+          child: GestureDetector(
+            onTap: () {
+              FocusScope.of(context).unfocus();
+            },
+            child: Column(
+              children: [
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.all(AppSpace.xl),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Logo(),
+                        SizedBox(
+                          height: 70,
+                          width: MediaQuery.of(context).size.width,
+                          child: const Text(' '),
+                        ),
+                        const Text(
+                          'Nhập số điện thoại của bạn\nđể tiếp tục',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            height: 1.5,
+                            fontSize: 18,
+                            color: AppColor.neutral70,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: AppSpace.xxl,
+                          ),
+                          child: TextField(
+                            onChanged: (value) => onChangeInput(value),
+                            controller: inputController,
+                            keyboardType: TextInputType.phone,
+                            cursorHeight: 14,
+                            decoration: InputDecoration(
+                              errorText: phoneError,
+                              hintText: 'Số điện thoại',
+                              hintStyle: const TextStyle(
+                                color: AppColor.neutral10,
+                              ),
+                              prefixIcon: Container(
+                                width: 88,
+                                padding: const EdgeInsets.only(
+                                  left: 4,
+                                ),
+                                child: const FlagWidget(),
+                              ),
+                              suffixIcon: !nextDisabled
+                                  ? const Icon(
+                                      Icons.check,
+                                      color: AppColor.primary,
+                                    )
+                                  : null,
+                            ),
+                          ),
+                        ),
+                        AppButton(
+                          loading: loading,
+                          label: 'Tiếp tục',
+                          onTab: () => onNext(context),
+                          disable: nextDisabled,
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 30),
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Logo(),
-                      const SizedBox(height: 70),
-                      const Text(
-                        'Nhập số điện thoại của bạn\nđể tiếp tục',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          height: 1.5,
-                          fontSize: 18,
+                      Expanded(
+                        child: Divider(
                           color: AppColor.neutral70,
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: AppSpace.xxl,
-                        ),
-                        child: TextField(
-                          onChanged: (value) => onChangeInput(value),
-                          controller: inputController,
-                          keyboardType: TextInputType.phone,
-                          cursorHeight: 14,
-                          decoration: InputDecoration(
-                            errorText: phoneError,
-                            hintText: 'Số điện thoại',
-                            hintStyle: const TextStyle(
-                              color: AppColor.neutral10,
-                            ),
-                            prefixIcon: Container(
-                              width: 88,
-                              padding: const EdgeInsets.only(
-                                left: 4,
-                              ),
-                              child: const FlagWidget(),
-                            ),
-                            suffixIcon: !nextDisabled
-                                ? const Icon(
-                                    Icons.check,
-                                    color: AppColor.primary,
-                                  )
-                                : null,
-                          ),
+                        padding: EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Text(
+                          'Hoặc',
+                          style: TextStyle(color: AppColor.neutral40),
                         ),
                       ),
-                      AppButton(
-                        loading: loading,
-                        label: 'Tiếp tục',
-                        onTab: () => onNext(context),
-                        disable: nextDisabled,
-                      )
+                      Expanded(
+                        child: Divider(
+                          color: AppColor.neutral70,
+                        ),
+                      ),
                     ],
                   ),
                 ),
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: Divider(
-                        color: AppColor.neutral70,
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: AppSpace.xxl),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SocialLoginWidget(
+                        image: Asset.logoGoogle,
+                        url: 'https://google.com',
+                        title: 'Login with Google',
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Text(
-                        'Hoặc',
-                        style: TextStyle(color: AppColor.neutral40),
+                      SizedBox(width: AppSpace.xl),
+                      SocialLoginWidget(
+                        image: Asset.logoFacebook,
+                        url: 'https://facebook.com',
+                        title: 'Login with Facebook',
                       ),
-                    ),
-                    Expanded(
-                      child: Divider(
-                        color: AppColor.neutral70,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: AppSpace.xxl),
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SocialLoginWidget(
-                      image: Asset.logoGoogle,
-                      url: 'https://google.com',
-                      title: 'Login with Google',
-                    ),
-                    SizedBox(width: AppSpace.xl),
-                    SocialLoginWidget(
-                      image: Asset.logoFacebook,
-                      url: 'https://facebook.com',
-                      title: 'Login with Facebook',
-                    ),
-                  ],
-                ),
-              )
-            ],
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
@@ -261,63 +268,6 @@ class _FlagWidgetState extends State<FlagWidget> {
       ),
     );
   }
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   return DropdownButtonHideUnderline(
-  //     child: DropdownButton<String>(
-  //       icon: const Text(''),
-  //       selectedItemBuilder: (BuildContext context) {
-  //         return flags.map<Widget>((dynamic h) {
-  //           return Row(
-  //             children: [
-  //               Image.asset(h['flag']),
-  //               Container(
-  //                 padding: const EdgeInsets.symmetric(
-  //                   horizontal: AppSpace.xs,
-  //                 ),
-  //                 decoration: const BoxDecoration(
-  //                   border: Border(
-  //                     right: BorderSide(
-  //                       color: AppColor.neutral10,
-  //                     ),
-  //                   ),
-  //                 ),
-  //                 child: Text(h['prefix']),
-  //               )
-  //             ],
-  //           );
-  //         }).toList();
-  //       },
-  //       value: currentLanguage,
-  //       onChanged: (newValue) {
-  //         setState(() {
-  //           currentLanguage = newValue ?? Language.currentLanguage;
-  //         });
-  //       },
-  //       items: flags.map((dynamic h) {
-  //         return DropdownMenuItem<String>(
-  //           value: h['id'],
-  //           child: Align(
-  //             alignment: Alignment.center,
-  //             child: Image.asset(h['flag']),
-  //           ),
-  //           // child: Row(
-  //           //   children: [
-  //           //     Image.asset(h['flag']),
-  //           //     Container(
-  //           //       padding: const EdgeInsets.symmetric(
-  //           //         horizontal: AppSpace.xs,
-  //           //       ),
-  //           //       child: Text(h['label']),
-  //           //     )
-  //           //   ],
-  //           // ),
-  //         );
-  //       }).toList(),
-  //     ),
-  //   );
-  // }
 }
 
 class SocialLoginWidget extends StatelessWidget {
@@ -347,8 +297,6 @@ class SocialLoginWidget extends StatelessWidget {
       child: IconButton(
         splashRadius: 26,
         onPressed: () {
-          return;
-
           Navigator.push(
             context,
             MaterialPageRoute(

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flora/constans/color.dart';
 import 'package:flora/constans/space.dart';
 import 'package:flora/widgets/button.dart';
@@ -11,6 +13,34 @@ class RegisterOtpScreen extends StatefulWidget {
 }
 
 class _RegisterOtpScreenState extends State<RegisterOtpScreen> {
+  bool btnDisabled = true;
+  bool btnLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  void onFilledOtp(String value) {
+    setState(() {
+      btnDisabled = value.length != 4;
+    });
+  }
+
+  void onNext() async {
+    setState(() {
+      btnLoading = true;
+    });
+
+    FocusScope.of(context).unfocus();
+
+    await Future.delayed(const Duration(seconds: 2));
+
+    setState(() {
+      btnLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,14 +75,13 @@ class _RegisterOtpScreenState extends State<RegisterOtpScreen> {
                 ),
               ),
             ),
-            const OtpWidget(),
-            const Padding(
-              padding: EdgeInsets.only(top: 44, bottom: AppSpace.xxl),
-              child: ResendOtpWidget(),
-            ),
+            OtpWidget(onFilledOtp: onFilledOtp),
+            const ResendOtpWidget(),
             AppButton(
+              disable: btnDisabled,
+              loading: btnLoading,
               label: 'Tiếp tục',
-              onTab: () {},
+              onTab: onNext,
             )
           ],
         ),
@@ -69,98 +98,168 @@ class ResendOtpWidget extends StatefulWidget {
 }
 
 class _ResendOtpWidgetState extends State<ResendOtpWidget> {
+  late int seconds;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    countdown();
+  }
+
+  void countdown() {
+    setState(() {
+      seconds = 59;
+    });
+
+    Timer.periodic(const Duration(seconds: 1), (Timer timer) {
+      if (mounted) {
+        setState(() {
+          seconds--;
+        });
+      }
+
+      if (seconds == 0) {
+        timer.cancel();
+      }
+    });
+  }
+
+  void resend() {
+    if (seconds > 0) {
+      return;
+    }
+
+    countdown();
+
+    // API
+  }
+
   @override
   Widget build(BuildContext context) {
-    return const Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text('Không nhận được mã OTP?'),
-        SizedBox(width: AppSpace.xs),
-        Text(
-          'Gửi lại (55s)',
-          style: TextStyle(
-            color: AppColor.primary,
-            fontWeight: FontWeight.w600,
+    return Padding(
+      padding: const EdgeInsets.only(top: 44, bottom: AppSpace.xxl),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Text('Không nhận được mã OTP?'),
+          const SizedBox(width: AppSpace.xs),
+          InkWell(
+            onTap: seconds == 0 ? resend : null,
+            child: Text(
+              'Gửi lại ${seconds > 0 ? '(${seconds}s)' : ''}',
+              style: const TextStyle(
+                color: AppColor.primary,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
 
 class OtpWidget extends StatefulWidget {
-  const OtpWidget({super.key});
+  final void Function(String) onFilledOtp;
+
+  const OtpWidget({
+    super.key,
+    required this.onFilledOtp,
+  });
 
   @override
   State<OtpWidget> createState() => _OtpWidgetState();
 }
 
 class _OtpWidgetState extends State<OtpWidget> {
+  late List<FocusNode> focusNodes;
+  late List<TextEditingController> inputControllers;
+
+  @override
+  void initState() {
+    super.initState();
+    focusNodes = List.generate(4, (index) => FocusNode());
+    inputControllers = List.generate(4, (index) => TextEditingController());
+
+    focusNodes[0].requestFocus();
+  }
+
   @override
   void dispose() {
+    for (int i = 0; i < 4; i++) {
+      focusNodes[i].dispose();
+      inputControllers[i].dispose();
+    }
+
     super.dispose();
   }
 
-  @override
-  void initState() {
-    super.initState();
+  void onOtpChange(value, int index) {
+    if (value == '') {
+      if (index > 0) {
+        focusNodes[index - 1].requestFocus();
+      }
+    } else {
+      if (value.length > 1) {
+        inputControllers[index].text = value[value.length - 1];
+      }
+
+      if (index < 3) {
+        focusNodes[index].unfocus();
+        focusNodes[index + 1].requestFocus();
+      }
+    }
+
+    isFilled();
+  }
+
+  void isFilled() {
+    String filled = '';
+
+    for (int i = 0; i < 4; i++) {
+      if (inputControllers[i].text != '') {
+        filled += inputControllers[i].text;
+      }
+    }
+
+    widget.onFilledOtp(filled);
   }
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        OtpWidgetInput(),
-        SizedBox(width: AppSpace.md),
-        OtpWidgetInput(),
-        SizedBox(width: AppSpace.md),
-        OtpWidgetInput(),
-        SizedBox(width: AppSpace.md),
-        OtpWidgetInput(),
-      ],
-    );
-  }
-}
-
-class OtpWidgetInput extends StatefulWidget {
-  final String? value;
-  const OtpWidgetInput({super.key, this.value});
-
-  @override
-  State<OtpWidgetInput> createState() => _OtpWidgetInputState();
-}
-
-class _OtpWidgetInputState extends State<OtpWidgetInput> {
-  late TextEditingController controller;
-
-  @override
-  void initState() {
-    super.initState();
-    controller = TextEditingController(text: widget.value);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 63,
-      height: 52,
-      child: TextField(
-        controller: controller,
-        keyboardType: TextInputType.number,
-        textAlign: TextAlign.center,
-        decoration: InputDecoration(
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(14)),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(14),
-            borderSide: const BorderSide(color: AppColor.neutral10),
+      children: List.generate(4, (index) {
+        return Container(
+          margin: const EdgeInsets.symmetric(horizontal: AppSpace.xs),
+          width: 60,
+          height: 70,
+          child: TextField(
+            focusNode: focusNodes[index],
+            controller: inputControllers[index],
+            keyboardType: TextInputType.number,
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontSize: 28, fontWeight: FontWeight.w600),
+            showCursor: false,
+            onChanged: (value) => onOtpChange(value, index),
+            maxLength: 2,
+            decoration: InputDecoration(
+              counterText: ' ',
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(14)),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(14),
+                borderSide: const BorderSide(color: AppColor.neutral10),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(14),
+                borderSide: const BorderSide(color: AppColor.primary),
+              ),
+            ),
           ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(14),
-            borderSide: const BorderSide(color: AppColor.primary),
-          ),
-        ),
-      ),
+        );
+      }),
     );
   }
 }
