@@ -9,6 +9,7 @@ import 'package:flora/widgets/button.dart';
 import 'package:flora/widgets/logo.dart';
 import 'package:flora/widgets/webview.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
 class RegisterPhoneScreen extends StatefulWidget {
   const RegisterPhoneScreen({super.key});
@@ -69,128 +70,128 @@ class _RegisterPhoneScreenState extends State<RegisterPhoneScreen> {
     Toast.initialize(context);
 
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: SingleChildScrollView(
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          child: GestureDetector(
-            onTap: () {
-              FocusScope.of(context).unfocus();
-            },
-            child: Column(
-              children: [
-                Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.all(AppSpace.xl),
-                    child: Column(
+      body: KeyboardVisibilityBuilder(
+        builder: (BuildContext context, bool isKeyboardVisible) {
+          return SizedBox(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            child: KeyboardDismissOnTap(
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.all(AppSpace.xl),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Logo(),
+                          SizedBox(
+                            height: isKeyboardVisible ? AppSpace.xxl : 70,
+                            width: MediaQuery.of(context).size.width,
+                            child: const Text(' '),
+                          ),
+                          const Text(
+                            'Nhập số điện thoại của bạn\nđể tiếp tục',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              height: 1.5,
+                              fontSize: 18,
+                              color: AppColor.neutral70,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: AppSpace.xxl,
+                            ),
+                            child: TextField(
+                              onChanged: (value) => onChangeInput(value),
+                              controller: inputController,
+                              keyboardType: TextInputType.phone,
+                              cursorHeight: 14,
+                              decoration: InputDecoration(
+                                errorText: phoneError,
+                                hintText: 'Số điện thoại',
+                                hintStyle: const TextStyle(
+                                  color: AppColor.neutral10,
+                                ),
+                                prefixIcon: Container(
+                                  width: 88,
+                                  padding: const EdgeInsets.only(
+                                    left: 4,
+                                  ),
+                                  child: const FlagWidget(),
+                                ),
+                                suffixIcon: !nextDisabled
+                                    ? const Icon(
+                                        Icons.check,
+                                        color: AppColor.primary,
+                                      )
+                                    : null,
+                              ),
+                            ),
+                          ),
+                          AppButton(
+                            loading: loading,
+                            label: 'Tiếp tục',
+                            onTab: () => onNext(context),
+                            disable: nextDisabled,
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 30),
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Logo(),
-                        SizedBox(
-                          height: 70,
-                          width: MediaQuery.of(context).size.width,
-                          child: const Text(' '),
-                        ),
-                        const Text(
-                          'Nhập số điện thoại của bạn\nđể tiếp tục',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            height: 1.5,
-                            fontSize: 18,
+                        Expanded(
+                          child: Divider(
                             color: AppColor.neutral70,
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: AppSpace.xxl,
-                          ),
-                          child: TextField(
-                            onChanged: (value) => onChangeInput(value),
-                            controller: inputController,
-                            keyboardType: TextInputType.phone,
-                            cursorHeight: 14,
-                            decoration: InputDecoration(
-                              errorText: phoneError,
-                              hintText: 'Số điện thoại',
-                              hintStyle: const TextStyle(
-                                color: AppColor.neutral10,
-                              ),
-                              prefixIcon: Container(
-                                width: 88,
-                                padding: const EdgeInsets.only(
-                                  left: 4,
-                                ),
-                                child: const FlagWidget(),
-                              ),
-                              suffixIcon: !nextDisabled
-                                  ? const Icon(
-                                      Icons.check,
-                                      color: AppColor.primary,
-                                    )
-                                  : null,
-                            ),
+                          padding: EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Text(
+                            'Hoặc',
+                            style: TextStyle(color: AppColor.neutral40),
                           ),
                         ),
-                        AppButton(
-                          loading: loading,
-                          label: 'Tiếp tục',
-                          onTab: () => onNext(context),
-                          disable: nextDisabled,
-                        )
+                        Expanded(
+                          child: Divider(
+                            color: AppColor.neutral70,
+                          ),
+                        ),
                       ],
                     ),
                   ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: Divider(
-                          color: AppColor.neutral70,
+                  Container(
+                    padding: EdgeInsets.symmetric(
+                        vertical:
+                            isKeyboardVisible ? AppSpace.xs : AppSpace.xxl),
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SocialLoginWidget(
+                          image: Asset.logoGoogle,
+                          url: 'https://google.com',
+                          title: 'Login with Google',
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Text(
-                          'Hoặc',
-                          style: TextStyle(color: AppColor.neutral40),
+                        SizedBox(width: AppSpace.xl),
+                        SocialLoginWidget(
+                          image: Asset.logoFacebook,
+                          url: 'https://facebook.com',
+                          title: 'Login with Facebook',
                         ),
-                      ),
-                      Expanded(
-                        child: Divider(
-                          color: AppColor.neutral70,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  padding: const EdgeInsets.symmetric(vertical: AppSpace.xxl),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SocialLoginWidget(
-                        image: Asset.logoGoogle,
-                        url: 'https://google.com',
-                        title: 'Login with Google',
-                      ),
-                      SizedBox(width: AppSpace.xl),
-                      SocialLoginWidget(
-                        image: Asset.logoFacebook,
-                        url: 'https://facebook.com',
-                        title: 'Login with Facebook',
-                      ),
-                    ],
-                  ),
-                )
-              ],
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }
