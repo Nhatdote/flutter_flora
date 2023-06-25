@@ -1,7 +1,10 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flora/constans/color.dart';
 import 'package:flora/constans/space.dart';
+import 'package:flora/routes.dart';
+import 'package:flora/shared/toast.dart';
 import 'package:flora/widgets/button.dart';
 import 'package:flutter/material.dart';
 
@@ -15,30 +18,62 @@ class RegisterOtpScreen extends StatefulWidget {
 class _RegisterOtpScreenState extends State<RegisterOtpScreen> {
   bool btnDisabled = true;
   bool btnLoading = false;
+  String? filledOtp;
+  late String otp;
 
   @override
   void initState() {
     super.initState();
+
+    makeOtp();
+  }
+
+  makeOtp() {
+    Random random = Random();
+    String newOtp = '';
+
+    for (int i = 0; i < 4; i++) {
+      newOtp += random.nextInt(9).toString();
+    }
+
+    Toast.show(
+      '[DEV] Mã OTP của bạn là $newOtp',
+      type: Toast.toastSuccess,
+      hidePrevSnackbar: false,
+    );
+
+    setState(() {
+      otp = newOtp;
+    });
   }
 
   void onFilledOtp(String value) {
     setState(() {
       btnDisabled = value.length != 4;
+      filledOtp = value.length == 4 ? value : null;
     });
   }
 
-  void onNext() async {
+  onNext(thisContext) async {
     setState(() {
       btnLoading = true;
     });
 
     FocusScope.of(context).unfocus();
 
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 1));
 
     setState(() {
       btnLoading = false;
     });
+
+    // checking API
+    if (filledOtp == null || filledOtp != otp) {
+      Toast.show('OTP không chính xác', type: Toast.toastError);
+      return;
+    }
+
+    Navigator.pushNamed(thisContext, AppRoute.registerForm);
   }
 
   @override
@@ -76,12 +111,12 @@ class _RegisterOtpScreenState extends State<RegisterOtpScreen> {
               ),
             ),
             OtpWidget(onFilledOtp: onFilledOtp),
-            const ResendOtpWidget(),
+            ResendOtpWidget(makeOtp: makeOtp),
             AppButton(
               disable: btnDisabled,
               loading: btnLoading,
               label: 'Tiếp tục',
-              onTab: onNext,
+              onTab: () => onNext(context),
             )
           ],
         ),
@@ -91,7 +126,12 @@ class _RegisterOtpScreenState extends State<RegisterOtpScreen> {
 }
 
 class ResendOtpWidget extends StatefulWidget {
-  const ResendOtpWidget({super.key});
+  final VoidCallback makeOtp;
+
+  const ResendOtpWidget({
+    super.key,
+    required this.makeOtp,
+  });
 
   @override
   State<ResendOtpWidget> createState() => _ResendOtpWidgetState();
@@ -109,7 +149,7 @@ class _ResendOtpWidgetState extends State<ResendOtpWidget> {
 
   void countdown() {
     setState(() {
-      seconds = 59;
+      seconds = 10;
     });
 
     Timer.periodic(const Duration(seconds: 1), (Timer timer) {
@@ -129,6 +169,8 @@ class _ResendOtpWidgetState extends State<ResendOtpWidget> {
     if (seconds > 0) {
       return;
     }
+
+    widget.makeOtp();
 
     countdown();
 

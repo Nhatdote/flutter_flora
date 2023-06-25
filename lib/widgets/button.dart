@@ -24,8 +24,7 @@ class AppButton extends StatelessWidget {
         child: Ink(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(25),
-            color:
-                disable ? AppColor.primary.withOpacity(0.3) : AppColor.primary,
+            color: disable ? AppColor.neutral10 : AppColor.primary,
           ),
           child: Container(
             alignment: Alignment.center,
@@ -41,8 +40,8 @@ class AppButton extends StatelessWidget {
                     ))
                 : Text(
                     label,
-                    style: const TextStyle(
-                      color: Colors.white,
+                    style: TextStyle(
+                      color: disable ? AppColor.neutral40 : Colors.white,
                       fontWeight: FontWeight.w600,
                     ),
                   ),

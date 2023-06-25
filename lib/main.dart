@@ -36,6 +36,7 @@ ThemeData themeData = ThemeData(
       borderRadius: BorderRadius.circular(8.0),
       borderSide: const BorderSide(color: AppColor.primary),
     ),
+    hintStyle: TextStyle(color: AppColor.neutral10),
     filled: true,
     fillColor: Colors.white,
     focusColor: AppColor.primary20,

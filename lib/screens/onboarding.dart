@@ -57,11 +57,11 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );
-      _pageTextController.animateToPage(
-        _page,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
+      // _pageTextController.animateToPage(
+      //   _page,
+      //   duration: const Duration(milliseconds: 300),
+      //   curve: Curves.easeInOut,
+      // );
     } else {
       onDone();
     }
