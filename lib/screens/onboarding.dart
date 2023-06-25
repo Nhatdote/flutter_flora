@@ -68,7 +68,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   }
 
   void onDone() {
-    Navigator.pushReplacementNamed(context, AppRoute.registerPhone);
+    Navigator.pushNamed(context, AppRoute.registerPhone);
   }
 
   @override

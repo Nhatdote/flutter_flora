@@ -9,7 +9,12 @@ import 'package:flora/widgets/button.dart';
 import 'package:flutter/material.dart';
 
 class RegisterOtpScreen extends StatefulWidget {
-  const RegisterOtpScreen({super.key});
+  final String? phone;
+
+  const RegisterOtpScreen({
+    super.key,
+    this.phone,
+  });
 
   @override
   State<RegisterOtpScreen> createState() => _RegisterOtpScreenState();
@@ -142,7 +147,6 @@ class _ResendOtpWidgetState extends State<ResendOtpWidget> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     countdown();
   }

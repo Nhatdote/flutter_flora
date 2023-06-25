@@ -25,6 +25,11 @@ class _RegisterPhoneScreenState extends State<RegisterPhoneScreen> {
   bool loading = false;
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   void dispose() {
     inputController.dispose();
     super.dispose();
@@ -44,7 +49,9 @@ class _RegisterPhoneScreenState extends State<RegisterPhoneScreen> {
     setState(() {
       loading = false;
     });
-    Navigator.pushNamed(thisContext, AppRoute.registerOtp);
+    Navigator.pushNamed(thisContext, AppRoute.registerOtp, arguments: {
+      'phone': inputController.text,
+    });
   }
 
   onChangeInput(value) {
@@ -210,14 +217,12 @@ class _FlagWidgetState extends State<FlagWidget> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     selectedLanguage = flags[0];
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return TextButton(
       onPressed: () {
         showDialog(

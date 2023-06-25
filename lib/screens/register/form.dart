@@ -143,7 +143,7 @@ class _RegisterFormScreenState extends State<RegisterFormScreen> {
     setState(() {
       btnLoading = true;
     });
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
 
     setState(() {
       btnLoading = false;
@@ -197,12 +197,13 @@ class _RegisterFormScreenState extends State<RegisterFormScreen> {
                         child: Column(
                           children: [
                             Padding(
-                              padding: EdgeInsets.only(bottom: AppSpace.xl),
+                              padding:
+                                  const EdgeInsets.only(bottom: AppSpace.xl),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   RichText(
-                                    text: TextSpan(
+                                    text: const TextSpan(
                                       text: 'Họ và tên',
                                       style: AppStyle.textLabel,
                                       children: [
@@ -212,7 +213,7 @@ class _RegisterFormScreenState extends State<RegisterFormScreen> {
                                       ],
                                     ),
                                   ),
-                                  SizedBox(height: AppSpace.xs),
+                                  const SizedBox(height: AppSpace.xs),
                                   TextFormField(
                                     textCapitalization:
                                         TextCapitalization.words,
@@ -226,12 +227,13 @@ class _RegisterFormScreenState extends State<RegisterFormScreen> {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.only(bottom: AppSpace.xl),
+                              padding:
+                                  const EdgeInsets.only(bottom: AppSpace.xl),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   RichText(
-                                    text: TextSpan(
+                                    text: const TextSpan(
                                       text: 'Mật khẩu',
                                       style: AppStyle.textLabel,
                                       children: [
@@ -241,13 +243,13 @@ class _RegisterFormScreenState extends State<RegisterFormScreen> {
                                       ],
                                     ),
                                   ),
-                                  SizedBox(height: AppSpace.xs),
+                                  const SizedBox(height: AppSpace.xs),
                                   TextFormField(
                                     obscureText: !showPassword,
                                     controller: inputControllers['password'],
                                     onChanged: onChangePassword,
                                     decoration: InputDecoration(
-                                      hintText: 'Điền tên của bạn ở đây',
+                                      hintText: 'Điền mật khẩu của bạn ở đây',
                                       suffixIcon: InkWell(
                                         onTap: () {
                                           setState(() {
@@ -264,7 +266,7 @@ class _RegisterFormScreenState extends State<RegisterFormScreen> {
                                     ),
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.only(top: 4),
+                                    padding: const EdgeInsets.only(top: 4),
                                     child: Column(
                                       children: regexPassword.entries.map(
                                         (entry) {
@@ -285,7 +287,7 @@ class _RegisterFormScreenState extends State<RegisterFormScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 RichText(
-                                  text: TextSpan(
+                                  text: const TextSpan(
                                     text: 'Nhập lại mật khẩu',
                                     style: AppStyle.textLabel,
                                     children: [
@@ -295,13 +297,13 @@ class _RegisterFormScreenState extends State<RegisterFormScreen> {
                                     ],
                                   ),
                                 ),
-                                SizedBox(height: AppSpace.xs),
+                                const SizedBox(height: AppSpace.xs),
                                 TextFormField(
                                   onChanged: _validRePassword,
                                   controller: inputControllers['rePassword'],
                                   obscureText: !showRePassword,
                                   decoration: InputDecoration(
-                                    hintText: 'Điền tên của bạn ở đây',
+                                    hintText: 'Điền mật khẩu của bạn ở đây',
                                     errorText: errorTextRepassword,
                                     suffixIcon: InkWell(
                                       onTap: () {

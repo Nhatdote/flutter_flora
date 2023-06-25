@@ -1,4 +1,5 @@
 import 'package:flora/screens/home.dart';
+import 'package:flora/screens/login.dart';
 import 'package:flora/screens/onboarding.dart';
 import 'package:flora/screens/profile.dart';
 import 'package:flora/screens/register/form.dart';
@@ -19,6 +20,8 @@ class AppRoute {
   static const String registerForm = 'register/form';
   static const String registerSuccess = '/register/success';
 
+  static const String login = '/login';
+
   static Map<String, WidgetBuilder> getRoutes() {
     return {
       home: (context) => const HomeScreen(),
@@ -29,6 +32,7 @@ class AppRoute {
       registerOtp: (context) => const RegisterOtpScreen(),
       registerForm: (context) => const RegisterFormScreen(),
       registerSuccess: (context) => const RegisterSuccessScreen(),
+      login: (context) => const LoginScreen()
     };
   }
 }

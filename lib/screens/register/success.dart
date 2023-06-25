@@ -4,6 +4,8 @@ import 'package:flora/widgets/button.dart';
 import 'package:flora/widgets/logo.dart';
 import 'package:flutter/material.dart';
 
+import '../../routes.dart';
+
 class RegisterSuccessScreen extends StatefulWidget {
   const RegisterSuccessScreen({super.key});
 
@@ -12,7 +14,7 @@ class RegisterSuccessScreen extends StatefulWidget {
 }
 
 class _RegisterSuccessScreenState extends State<RegisterSuccessScreen> {
-  Widget body = SuccessWidget();
+  Widget body = const SuccessWidget();
 
   @override
   void initState() {
@@ -22,10 +24,10 @@ class _RegisterSuccessScreenState extends State<RegisterSuccessScreen> {
   }
 
   void changeState() async {
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 1));
 
     setState(() {
-      body = StartWidget();
+      body = const StartWidget();
     });
   }
 
@@ -68,22 +70,26 @@ class StartWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(
+    return SafeArea(
       child: Padding(
-        padding: EdgeInsets.all(AppSpace.xl),
+        padding: const EdgeInsets.all(AppSpace.xl),
         child: Column(
           children: [
-            Spacer(),
-            Logo(),
-            SizedBox(height: 35),
-            Text(
+            const Spacer(),
+            const Logo(),
+            const SizedBox(height: 35),
+            const Text(
               'Chào mừng bạn đến với Flora',
               style: AppStyle.textHeading2,
             ),
-            Spacer(),
+            const Spacer(),
             AppButton(
               label: 'Bắt đầu',
-              onTab: () {},
+              onTab: () => Navigator.pushNamedAndRemoveUntil(
+                context,
+                AppRoute.login,
+                (route) => false,
+              ),
             ),
           ],
         ),

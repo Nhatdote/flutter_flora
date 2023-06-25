@@ -1,4 +1,5 @@
 import 'package:flora/constans/color.dart';
+import 'package:flora/db.dart';
 import 'package:flora/routes.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +10,8 @@ class Flora extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    DB.init();
+
     return MaterialApp(
       title: 'Flora',
       theme: themeData,
@@ -36,7 +39,7 @@ ThemeData themeData = ThemeData(
       borderRadius: BorderRadius.circular(8.0),
       borderSide: const BorderSide(color: AppColor.primary),
     ),
-    hintStyle: TextStyle(color: AppColor.neutral10),
+    hintStyle: const TextStyle(color: AppColor.neutral10),
     filled: true,
     fillColor: Colors.white,
     focusColor: AppColor.primary20,

@@ -1,7 +1,24 @@
 import 'package:flora/constans/asset.dart';
 import 'package:flora/constans/language.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DB {
+  static SharedPreferences? _prefs;
+
+  static Future<void> init() async {
+    _prefs = await SharedPreferences.getInstance();
+    // _prefs?.clear();
+  }
+
+  static SharedPreferences get prefs {
+    if (_prefs == null) {
+      throw Exception(
+          'SharedPreferences has not been initialized. Call init() before accessing prefs.');
+    }
+
+    return _prefs!;
+  }
+
   static const List<Map<String, dynamic>> onBoarding = [
     {
       'icon': Asset.onBoarding1,
