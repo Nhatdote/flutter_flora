@@ -8,7 +8,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
 class RegisterFormScreen extends StatefulWidget {
-  const RegisterFormScreen({super.key});
+  final String phone;
+
+  const RegisterFormScreen({
+    super.key,
+    required this.phone,
+  });
 
   @override
   State<RegisterFormScreen> createState() => _RegisterFormScreenState();

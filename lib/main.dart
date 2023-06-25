@@ -16,7 +16,9 @@ class Flora extends StatelessWidget {
       title: 'Flora',
       theme: themeData,
       initialRoute: AppRoute.splash,
-      routes: AppRoute.getRoutes(),
+      // routes: AppRoute.getRoutes(),
+      onGenerateRoute: (RouteSettings settings) =>
+          AppRoute.onGenerateRoute(settings),
     );
   }
 }

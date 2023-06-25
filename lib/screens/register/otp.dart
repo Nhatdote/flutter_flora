@@ -9,11 +9,11 @@ import 'package:flora/widgets/button.dart';
 import 'package:flutter/material.dart';
 
 class RegisterOtpScreen extends StatefulWidget {
-  final String? phone;
+  final String phone;
 
   const RegisterOtpScreen({
     super.key,
-    this.phone,
+    required this.phone,
   });
 
   @override
@@ -104,12 +104,12 @@ class _RegisterOtpScreenState extends State<RegisterOtpScreen> {
         padding: const EdgeInsets.symmetric(horizontal: AppSpace.xxl),
         child: Column(
           children: [
-            const Padding(
-              padding: EdgeInsets.only(bottom: 48, top: 28),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 48, top: 28),
               child: Text(
-                'Nhập mã xác minh vừa được gửi vào\nsố điện thoại đăng ký.',
+                'Nhập mã xác minh vừa được gửi vào\nsố điện thoại ${widget.phone}.',
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   color: AppColor.neutral70,
                   fontSize: 16,
                 ),

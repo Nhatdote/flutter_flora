@@ -41,7 +41,7 @@ class _RegisterPhoneScreenState extends State<RegisterPhoneScreen> {
     });
 
     Toast.show(
-      'Hãy nhập mã OTP được gửi đến số điện thoại của bạn',
+      'Mã OTP đã được gửi đến số điện thoại của bạn. Vui lòng kiểm tra tin nhắn',
       duration: 2,
     );
     await Future.delayed(const Duration(seconds: 1));

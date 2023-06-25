@@ -10,4 +10,6 @@ class Asset {
 
   static const String flagVi = 'assets/images/etc/flag_vi.png';
   static const String flagEn = 'assets/images/etc/flag_en.png';
+
+  static const String errorUfo = 'assets/images/etc/error_ufo.png';
 }
