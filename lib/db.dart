@@ -3,6 +3,9 @@ import 'package:flora/constans/language.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DB {
+  static const skipOnBoarding = 'skipOnBoarding';
+  static const users = 'users';
+
   static SharedPreferences? _prefs;
 
   static Future<void> init() async {

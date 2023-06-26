@@ -1,6 +1,8 @@
 import 'package:flora/constans/color.dart';
 import 'package:flora/constans/space.dart';
 import 'package:flora/constans/style.dart';
+import 'package:flora/models/user.dart';
+import 'package:flora/shared/toast.dart';
 import 'package:flora/widgets/button.dart';
 import 'package:flora/widgets/logo.dart';
 import 'package:flora/widgets/webview.dart';
@@ -19,139 +21,201 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController phoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  ScrollController scrollController = ScrollController();
   bool btnLoading = false;
   bool btnDisabled = true;
+  bool showPassword = false;
   String? errorTextPhone;
   String? errorTextPassword;
+
+  onLogin() {
+    String phone = phoneController.text;
+    String password = passwordController.text;
+
+    final bool check = User.verify(phone, password);
+
+    Toast.initialize(context);
+
+    if (!check) {
+      Toast.showError('Số điện thoại hoặc mật khẩu không đúng!');
+      return;
+    }
+
+    Toast.showSuccess('Đăng nhập thành công!');
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    phoneController.dispose();
+    passwordController.dispose();
+    scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: KeyboardDismissOnTap(
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height,
-          child: Padding(
-            padding: const EdgeInsets.all(AppSpace.xl),
+      body: KeyboardVisibilityBuilder(
+        builder: (BuildContext context, isKeyboardVisible) {
+          if (isKeyboardVisible) {
+            scrollController.animateTo(
+              100,
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeOut,
+            );
+          }
+
+          return KeyboardDismissOnTap(
             child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const Spacer(),
-                  const Logo(),
-                  const Padding(
-                    padding: EdgeInsets.only(top: AppSpace.xxl, bottom: 34),
-                    child: Text(
-                      'Đăng nhập để sử dụng\ndịch vụ của bạn',
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  Form(
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: AppSpace.xl),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text('Số điện thoại',
-                                  style: AppStyle.textLabel),
-                              const SizedBox(height: AppSpace.xs),
-                              TextFormField(
-                                keyboardType: TextInputType.phone,
-                                controller: phoneController,
-                                decoration: InputDecoration(
-                                  hintText: 'Nhập số điện thoại của bạn',
-                                  errorText: errorTextPhone,
-                                ),
-                              )
-                            ],
-                          ),
+              controller: scrollController,
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height,
+                child: Padding(
+                  padding: const EdgeInsets.all(AppSpace.xl),
+                  child: Column(
+                    children: [
+                      const Spacer(),
+                      const Logo(),
+                      const Padding(
+                        padding: EdgeInsets.only(top: AppSpace.xxl, bottom: 34),
+                        child: Text(
+                          'Đăng nhập để sử dụng\ndịch vụ của bạn',
+                          textAlign: TextAlign.center,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: AppSpace.xl),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text('Mật khẩu', style: AppStyle.textLabel),
-                              const SizedBox(height: AppSpace.xs),
-                              TextFormField(
-                                obscureText: true,
-                                controller: passwordController,
-                                decoration: InputDecoration(
-                                  hintText: 'Nhập mật khẩu của bạn',
-                                  errorText: errorTextPhone,
-                                ),
+                      ),
+                      Form(
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(bottom: AppSpace.xl),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text('Số điện thoại',
+                                      style: AppStyle.textLabel),
+                                  const SizedBox(height: AppSpace.xs),
+                                  TextFormField(
+                                    keyboardType: TextInputType.phone,
+                                    controller: phoneController,
+                                    decoration: InputDecoration(
+                                      hintText: 'Nhập số điện thoại của bạn',
+                                      errorText: errorTextPhone,
+                                    ),
+                                  )
+                                ],
                               ),
-                              const SizedBox(height: 5),
-                              Align(
-                                alignment: Alignment.centerRight,
-                                child: InkWell(
-                                  onTap: () {},
-                                  child: const Text(
-                                    'Quên mật khẩu?',
-                                    style: TextStyle(color: AppColor.primary),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(bottom: AppSpace.xl),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text('Mật khẩu',
+                                      style: AppStyle.textLabel),
+                                  const SizedBox(height: AppSpace.xs),
+                                  TextFormField(
+                                    obscureText: !showPassword,
+                                    controller: passwordController,
+                                    decoration: InputDecoration(
+                                      hintText: 'Nhập mật khẩu của bạn',
+                                      errorText: errorTextPhone,
+                                      suffixIcon: InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            showPassword = !showPassword;
+                                          });
+                                        },
+                                        child: Icon(
+                                          showPassword
+                                              ? Icons.visibility_outlined
+                                              : Icons.visibility_off_outlined,
+                                          color: AppColor.neutral40,
+                                        ),
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              )
-                            ],
-                          ),
+                                  const SizedBox(height: 5),
+                                  Align(
+                                    alignment: Alignment.centerRight,
+                                    child: InkWell(
+                                      onTap: () {},
+                                      child: const Text(
+                                        'Quên mật khẩu?',
+                                        style:
+                                            TextStyle(color: AppColor.primary),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                            AppButton(
+                              label: 'Đăng nhập',
+                              onTab: onLogin,
+                            )
+                          ],
                         ),
-                        AppButton(
-                          label: 'Đăng nhập',
-                          onTab: () {},
-                        )
-                      ],
-                    ),
+                      ),
+                      const Spacer(),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              child: Divider(
+                                color: AppColor.neutral70,
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 8.0),
+                              child: Text(
+                                'Hoặc',
+                                style: TextStyle(color: AppColor.neutral40),
+                              ),
+                            ),
+                            Expanded(
+                              child: Divider(
+                                color: AppColor.neutral70,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        padding:
+                            const EdgeInsets.symmetric(vertical: AppSpace.xxl),
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SocialLoginWidget(
+                              image: Asset.logoGoogle,
+                              url: 'https://google.com',
+                              title: 'Login with Google',
+                            ),
+                            SizedBox(width: AppSpace.xl),
+                            SocialLoginWidget(
+                              image: Asset.logoFacebook,
+                              url: 'https://facebook.com',
+                              title: 'Login with Facebook',
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
                   ),
-                  const Spacer(),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: Divider(
-                            color: AppColor.neutral70,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Text(
-                            'Hoặc',
-                            style: TextStyle(color: AppColor.neutral40),
-                          ),
-                        ),
-                        Expanded(
-                          child: Divider(
-                            color: AppColor.neutral70,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(vertical: 4),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SocialLoginWidget(
-                          image: Asset.logoGoogle,
-                          url: 'https://google.com',
-                          title: 'Login with Google',
-                        ),
-                        SizedBox(width: AppSpace.xl),
-                        SocialLoginWidget(
-                          image: Asset.logoFacebook,
-                          url: 'https://facebook.com',
-                          title: 'Login with Facebook',
-                        ),
-                      ],
-                    ),
-                  )
-                ],
+                ),
               ),
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }

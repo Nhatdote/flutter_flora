@@ -1,11 +1,19 @@
+import 'dart:math';
+
 import 'package:flora/constans/color.dart';
 import 'package:flora/constans/space.dart';
 import 'package:flora/constans/style.dart';
+import 'package:flora/db.dart';
+import 'package:flora/models/user.dart';
 import 'package:flora/routes.dart';
+import 'package:flora/screens/error.dart';
+import 'package:flora/shared/functions.dart';
 import 'package:flora/shared/toast.dart';
 import 'package:flora/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uuid/uuid.dart';
 
 class RegisterFormScreen extends StatefulWidget {
   final String phone;
@@ -155,14 +163,38 @@ class _RegisterFormScreenState extends State<RegisterFormScreen> {
     });
 
     String fullname = inputControllers['fullname']!.text;
-    if (fullname.toLowerCase() == 'nhatdote') {
+    String password = inputControllers['password']!.text;
+
+    if (fullname.toLowerCase() == 'nhatdote' || User.isExist(widget.phone)) {
       Toast.showError('$fullname đã được sử dụng!');
       return;
     }
 
-    // Navigator.pushNamedAndRemoveUntil(thisContext, AppRoute.registerSuccess);
-    Navigator.pushNamedAndRemoveUntil(
-        thisContext, AppRoute.registerSuccess, (route) => false);
+    SharedPreferences prefs = DB.prefs;
+    prefs.setBool(DB.skipOnBoarding, true);
+
+    bool store = await User.store(
+      User(
+        id: const Uuid().v4(),
+        fullname: fullname,
+        password: Fs.hash(password),
+        phone: '0${widget.phone}',
+      ),
+    );
+
+    if (store) {
+      Navigator.pushNamedAndRemoveUntil(
+          thisContext, AppRoute.registerSuccess, (route) => false);
+    } else {
+      Navigator.push(
+        thisContext,
+        MaterialPageRoute(
+          builder: (_) => const ErrorScreen(
+            messsage: "Oops... Tạo mới tài khoản không thành công!",
+          ),
+        ),
+      );
+    }
   }
 
   @override

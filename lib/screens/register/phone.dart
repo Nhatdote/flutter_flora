@@ -49,9 +49,13 @@ class _RegisterPhoneScreenState extends State<RegisterPhoneScreen> {
     setState(() {
       loading = false;
     });
-    Navigator.pushNamed(thisContext, AppRoute.registerOtp, arguments: {
-      'phone': inputController.text,
-    });
+    Navigator.pushNamed(
+      thisContext,
+      AppRoute.registerOtp,
+      arguments: {
+        'phone': inputController.text,
+      },
+    );
   }
 
   onChangeInput(value) {

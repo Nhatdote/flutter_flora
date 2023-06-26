@@ -78,7 +78,13 @@ class _RegisterOtpScreenState extends State<RegisterOtpScreen> {
       return;
     }
 
-    Navigator.pushNamed(thisContext, AppRoute.registerForm);
+    Navigator.pushNamed(
+      thisContext,
+      AppRoute.registerForm,
+      arguments: {
+        'phone': widget.phone,
+      },
+    );
   }
 
   @override
