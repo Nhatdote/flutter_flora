@@ -1,8 +1,9 @@
 import 'package:flora/screens/error.dart';
-import 'package:flora/screens/home.dart';
+import 'package:flora/screens/home/home.dart';
+import 'package:flora/screens/home/index.dart';
+import 'package:flora/screens/home/profile.dart';
 import 'package:flora/screens/login.dart';
 import 'package:flora/screens/onboarding.dart';
-import 'package:flora/screens/profile.dart';
 import 'package:flora/screens/register/form.dart';
 import 'package:flora/screens/register/otp.dart';
 import 'package:flora/screens/register/phone.dart';
@@ -11,10 +12,10 @@ import 'package:flora/screens/splash.dart';
 import 'package:flutter/material.dart';
 
 class AppRoute {
-  static const String home = '/';
+  static const String index = '/';
+
   static const String splash = '/splash';
   static const String onBoarding = '/onboarding';
-  static const String profile = '/profile';
   static const String registerPhone = '/register/phone';
   static const String registerOtp = '/register/otp';
   static const String registerForm = 'register/form';
@@ -23,10 +24,9 @@ class AppRoute {
 
   // Routes is not have any agruments
   static Map<String, Widget> simpleRoutes = {
-    home: const HomeScreen(),
+    index: const IndexScreen(),
     splash: const SplashScreen(),
     onBoarding: const OnBoardingScreen(),
-    profile: const ProfileScreen(),
     registerPhone: const RegisterPhoneScreen(),
     registerSuccess: const RegisterSuccessScreen(),
     login: const LoginScreen()

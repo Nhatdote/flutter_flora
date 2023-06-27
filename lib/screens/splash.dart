@@ -25,9 +25,10 @@ class _SplashScreenState extends State<SplashScreen> {
 
     final bool isSkip = DB.prefs.getBool(DB.skipOnBoarding) ?? false;
 
-    Navigator.pushReplacementNamed(
+    Navigator.pushNamedAndRemoveUntil(
       thisContext,
-      isSkip ? AppRoute.login : AppRoute.onBoarding,
+      isSkip ? AppRoute.index : AppRoute.onBoarding,
+      (route) => false,
     );
   }
 

@@ -68,6 +68,7 @@ flutter:
   assets:
     - assets/images/
     - assets/images/etc/
+    - assets/images/layout/
     - assets/images/logo/
     - assets/images/products/
     - assets/images/shops/

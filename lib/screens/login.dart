@@ -2,6 +2,7 @@ import 'package:flora/constans/color.dart';
 import 'package:flora/constans/space.dart';
 import 'package:flora/constans/style.dart';
 import 'package:flora/models/user.dart';
+import 'package:flora/routes.dart';
 import 'package:flora/shared/toast.dart';
 import 'package:flora/widgets/button.dart';
 import 'package:flora/widgets/logo.dart';
@@ -28,25 +29,56 @@ class _LoginScreenState extends State<LoginScreen> {
   String? errorTextPhone;
   String? errorTextPassword;
 
-  onLogin() {
+  onLogin(thisContext) async {
     String phone = phoneController.text;
     String password = passwordController.text;
 
-    final bool check = User.verify(phone, password);
+    setState(() {
+      btnLoading = true;
+    });
 
-    Toast.initialize(context);
+    await Future.delayed(const Duration(seconds: 1));
+
+    setState(() {
+      btnLoading = false;
+    });
+
+    final bool check = User.verify(phone, password);
 
     if (!check) {
       Toast.showError('Số điện thoại hoặc mật khẩu không đúng!');
       return;
     }
 
-    Toast.showSuccess('Đăng nhập thành công!');
+    Toast.show('Đăng nhập thành công!');
+    Navigator.pushNamedAndRemoveUntil(
+      thisContext,
+      AppRoute.index,
+      (route) => false,
+    );
+  }
+
+  void onChangeInput(value) {
+    String phone = phoneController.text;
+    String password = passwordController.text;
+
+    if (phone != '' && password != '') {
+      setState(() {
+        btnDisabled = false;
+      });
+    } else {
+      setState(() {
+        btnDisabled = true;
+      });
+    }
   }
 
   @override
   void initState() {
     super.initState();
+
+    // phoneController = TextEditingController(text: '0353268673');
+    // passwordController = TextEditingController(text: 'nhaT1379.');
   }
 
   @override
@@ -59,6 +91,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Toast.initialize(context);
+
     return Scaffold(
       body: KeyboardVisibilityBuilder(
         builder: (BuildContext context, isKeyboardVisible) {
@@ -103,6 +137,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   TextFormField(
                                     keyboardType: TextInputType.phone,
                                     controller: phoneController,
+                                    onChanged: (value) => onChangeInput(value),
                                     decoration: InputDecoration(
                                       hintText: 'Nhập số điện thoại của bạn',
                                       errorText: errorTextPhone,
@@ -123,6 +158,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   TextFormField(
                                     obscureText: !showPassword,
                                     controller: passwordController,
+                                    onChanged: (value) => onChangeInput(value),
                                     decoration: InputDecoration(
                                       hintText: 'Nhập mật khẩu của bạn',
                                       errorText: errorTextPhone,
@@ -158,7 +194,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             AppButton(
                               label: 'Đăng nhập',
-                              onTab: onLogin,
+                              onTab: () => onLogin(context),
+                              loading: btnLoading,
+                              disable: btnDisabled,
                             )
                           ],
                         ),

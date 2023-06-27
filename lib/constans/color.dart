@@ -13,4 +13,6 @@ class AppColor {
   static const Color neutral70 = Color(0xff3A4342);
   static const Color neutral40 = Color(0xff6E7877);
   static const Color neutral10 = Color(0xffD2D9D8);
+
+  static const Color background = Color(0xffEEEEEE);
 }
