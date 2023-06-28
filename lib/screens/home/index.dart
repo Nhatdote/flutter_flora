@@ -1,3 +1,4 @@
+import 'package:flora/constans/asset.dart';
 import 'package:flora/constans/color.dart';
 import 'package:flora/constans/space.dart';
 import 'package:flora/screens/home/cart.dart';
@@ -25,8 +26,8 @@ class _IndexScreenState extends State<IndexScreen> {
           color: AppColor.neutral,
         ),
       ),
-      'icon': const Icon(Icons.home_outlined),
-      'iconActive': const Icon(Icons.home),
+      'icon': Asset.iconHome,
+      'iconActive': Asset.iconHomeSolid,
       'label': 'Trang chủ',
       'color': Colors.green
     },
@@ -38,8 +39,8 @@ class _IndexScreenState extends State<IndexScreen> {
           color: AppColor.neutral,
         ),
       ),
-      'icon': const Icon(Icons.confirmation_number_outlined),
-      'iconActive': const Icon(Icons.confirmation_number),
+      'icon': Asset.iconCoupon,
+      'iconActive': Asset.iconCouponSolid,
       'label': 'Ưu đãi',
       'color': Colors.redAccent
     },
@@ -52,8 +53,8 @@ class _IndexScreenState extends State<IndexScreen> {
           color: AppColor.neutral,
         ),
       ),
-      'icon': const Icon(Icons.shopping_basket_outlined),
-      'iconActive': const Icon(Icons.shopping_basket),
+      'icon': Asset.iconPackage,
+      'iconActive': Asset.iconPackageSolid,
       'label': 'Giỏ hàng',
       'color': Colors.indigoAccent
     },
@@ -65,8 +66,8 @@ class _IndexScreenState extends State<IndexScreen> {
           color: AppColor.neutral,
         ),
       ),
-      'icon': const Icon(Icons.person),
-      'iconActive': const Icon(Icons.person_outline),
+      'icon': Asset.iconUser,
+      'iconActive': Asset.iconUserSolid,
       'label': 'Cá nhân',
       'color': Colors.purpleAccent
     }
@@ -83,7 +84,10 @@ class _IndexScreenState extends State<IndexScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      body: currentScreen['widget'],
+      body: IndexedStack(
+        index: _currentIndex,
+        children: _screens.map((h) => h['widget'] as Widget).toList(),
+      ),
       floatingActionButton: Container(
         decoration: BoxDecoration(
           boxShadow: const [
@@ -111,10 +115,10 @@ class _IndexScreenState extends State<IndexScreen> {
         color: Colors.white,
         notchMargin: 8,
         shape: const CircularNotchedRectangle(),
-        shadowColor: Colors.red,
         child: BottomNavigationBar(
           selectedItemColor: AppColor.primary,
           unselectedItemColor: AppColor.neutral40,
+          backgroundColor: Colors.white,
           type: BottomNavigationBarType.fixed,
           showUnselectedLabels: true,
           currentIndex: _currentIndex,
@@ -127,11 +131,14 @@ class _IndexScreenState extends State<IndexScreen> {
           items: _screens
               .map(
                 (h) => BottomNavigationBarItem(
-                  icon: h['icon'],
+                  icon: h['icon'].runtimeType == String
+                      ? Image.asset(h['icon'], width: 20)
+                      : h['icon'],
                   label: h['label'],
-                  activeIcon: h['iconActive'],
+                  activeIcon: h['iconActive'].runtimeType == String
+                      ? Image.asset(h['iconActive'], width: 20)
+                      : h['iconActive'],
                   tooltip: h['label'],
-                  backgroundColor: h['color'],
                 ),
               )
               .toList(),

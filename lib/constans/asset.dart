@@ -12,4 +12,14 @@ class Asset {
   static const String flagEn = 'assets/images/etc/flag_en.png';
 
   static const String errorUfo = 'assets/images/etc/error_ufo.png';
+
+  static const String iconHome = 'assets/images/icons/home.png';
+  static const String iconHomeSolid = 'assets/images/icons/home_solid.png';
+  static const String iconCoupon = 'assets/images/icons/coupon.png';
+  static const String iconCouponSolid = 'assets/images/icons/coupon_solid.png';
+  static const String iconPackage = 'assets/images/icons/package.png';
+  static const String iconPackageSolid =
+      'assets/images/icons/package_solid.png';
+  static const String iconUser = 'assets/images/icons/user.png';
+  static const String iconUserSolid = 'assets/images/icons/user_solid.png';
 }
