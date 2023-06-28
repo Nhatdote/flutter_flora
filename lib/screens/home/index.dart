@@ -5,6 +5,7 @@ import 'package:flora/screens/home/cart.dart';
 import 'package:flora/screens/home/endow.dart';
 import 'package:flora/screens/home/home.dart';
 import 'package:flora/screens/home/profile.dart';
+import 'package:flora/widgets/flora_cam.dart';
 import 'package:flutter/material.dart';
 
 class IndexScreen extends StatefulWidget {
@@ -104,7 +105,7 @@ class _IndexScreenState extends State<IndexScreen> {
           onPressed: () {
             // Xử lý sự kiện khi nhấn nút FAB
           },
-          child: const Icon(Icons.add),
+          child: const FloraCam(),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

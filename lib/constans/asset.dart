@@ -22,4 +22,7 @@ class Asset {
       'assets/images/icons/package_solid.png';
   static const String iconUser = 'assets/images/icons/user.png';
   static const String iconUserSolid = 'assets/images/icons/user_solid.png';
+
+  static const String iconFloraCamFour = 'assets/images/logo/camera_four.png';
+  static const String iconFloraCamLogo = 'assets/images/logo/camera_logo.png';
 }
