@@ -1,11 +1,15 @@
+import 'dart:io';
+import 'package:camera/camera.dart';
 import 'package:flora/constans/asset.dart';
 import 'package:flora/constans/color.dart';
 import 'package:flora/constans/space.dart';
+import 'package:flora/screens/flora_camera.dart';
 import 'package:flora/screens/home/cart.dart';
 import 'package:flora/screens/home/endow.dart';
 import 'package:flora/screens/home/home.dart';
 import 'package:flora/screens/home/profile.dart';
-import 'package:flora/widgets/flora_cam.dart';
+import 'package:flora/shared/toast.dart';
+import 'package:flora/widgets/flora_floating_btn.dart';
 import 'package:flutter/material.dart';
 
 class IndexScreen extends StatefulWidget {
@@ -17,6 +21,8 @@ class IndexScreen extends StatefulWidget {
 
 class _IndexScreenState extends State<IndexScreen> {
   int _currentIndex = 0;
+  CameraDescription? firstCamera;
+  bool hasPermission = false;
 
   final List<Map<String, dynamic>> _screens = [
     {
@@ -75,7 +81,26 @@ class _IndexScreenState extends State<IndexScreen> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  Future<void> requestCamera() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    final List<CameraDescription> cameras = await availableCameras();
+    if (cameras.isNotEmpty) {
+      firstCamera = cameras.first;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    Toast.initialize(context);
     final Map<String, dynamic> currentScreen = _screens[_currentIndex];
 
     return Scaffold(
@@ -102,10 +127,22 @@ class _IndexScreenState extends State<IndexScreen> {
         child: FloatingActionButton(
           elevation: 0,
           backgroundColor: AppColor.primary,
-          onPressed: () {
-            // Xử lý sự kiện khi nhấn nút FAB
+          onPressed: () async {
+            if (!hasPermission) {
+              await requestCamera();
+            }
+
+            if (firstCamera != null) {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => FloraCameraScreen(camera: firstCamera!),
+                ),
+              );
+            } else {
+              Toast.showError('No camera found!');
+            }
           },
-          child: const FloraCam(),
+          child: const FloraFloatingBtn(),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -137,7 +174,11 @@ class _IndexScreenState extends State<IndexScreen> {
                       : h['icon'],
                   label: h['label'],
                   activeIcon: h['iconActive'].runtimeType == String
-                      ? Image.asset(h['iconActive'], width: 20)
+                      ? Image.asset(
+                          h['iconActive'],
+                          width: 20,
+                          color: AppColor.primary,
+                        )
                       : h['iconActive'],
                   tooltip: h['label'],
                 ),
@@ -145,6 +186,22 @@ class _IndexScreenState extends State<IndexScreen> {
               .toList(),
         ),
       ),
+    );
+  }
+}
+
+class DisplayPictureScreen extends StatelessWidget {
+  final String imagePath;
+
+  const DisplayPictureScreen({super.key, required this.imagePath});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Display the Picture')),
+      // The image is stored as a file on the device. Use the `Image.file`
+      // constructor with the given path to display the image.
+      body: Image.file(File(imagePath)),
     );
   }
 }

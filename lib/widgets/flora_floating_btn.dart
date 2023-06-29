@@ -1,8 +1,8 @@
 import 'package:flora/constans/asset.dart';
 import 'package:flutter/material.dart';
 
-class FloraCam extends StatelessWidget {
-  const FloraCam({super.key});
+class FloraFloatingBtn extends StatelessWidget {
+  const FloraFloatingBtn({super.key});
 
   @override
   Widget build(BuildContext context) {
