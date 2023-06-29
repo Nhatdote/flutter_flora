@@ -1,16 +1,13 @@
-# flora
+# Flora
 
-A new Flutter project.
+<p align="left">
+  <img src="./assets/images/boards/1.png" alt="Image Description" height="350">
+  <img src="./assets/images/boards/2.png" alt="Image Description" height="350">
+  <img src="./assets/images/boards/3.png" alt="Image Description" height="349">
+</p>
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<p align="left">
+  <img src="./assets/images/boards/4.png" alt="Image Description" height="200">
+  <img src="./assets/images/boards/5.png" alt="Image Description" height="200">
+  <img src="./assets/images/boards/6.png" alt="Image Description" height="200">
+</p>
