@@ -139,7 +139,11 @@ class _IndexScreenState extends State<IndexScreen> {
                 ),
               );
             } else {
-              Toast.showError('No camera found!');
+              Toast.show(
+                'No camera found!',
+                type: Toast.toastError,
+                behavior: SnackBarBehavior.floating,
+              );
             }
           },
           child: const FloraFloatingBtn(),

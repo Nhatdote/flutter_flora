@@ -19,14 +19,13 @@ class Toast {
     Toast.show(message, type: Toast.toastSuccess);
   }
 
-  static void show(
-    dynamic message, {
-    SnackBarAction? action,
-    Color color = const Color(0xFF323232),
-    bool hidePrevSnackbar = true,
-    String? type,
-    int duration = 3,
-  }) {
+  static void show(dynamic message,
+      {SnackBarAction? action,
+      Color color = const Color(0xFF323232),
+      bool hidePrevSnackbar = true,
+      String? type,
+      int duration = 3,
+      SnackBarBehavior behavior = SnackBarBehavior.fixed}) {
     SchedulerBinding.instance.addPostFrameCallback((_) {
       if (hidePrevSnackbar) {
         _scaffoldMessenger?.hideCurrentSnackBar();
@@ -38,6 +37,7 @@ class Toast {
       }
 
       final snackBar = SnackBar(
+        behavior: behavior,
         content: message.runtimeType == String ? Text(message) : message,
         action: action,
         backgroundColor: snackBarColor,
