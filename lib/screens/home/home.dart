@@ -1,7 +1,9 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flora/constans/asset.dart';
 import 'package:flora/constans/space.dart';
 import 'package:flora/db.dart';
 import 'package:flutter/material.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../constans/color.dart';
 
@@ -36,29 +38,45 @@ class PromotionWidget extends StatefulWidget {
 class _PromotionWidgetState extends State<PromotionWidget> {
   final List<String> items = DB.promotions;
   int currentIndex = 1;
-  PageController controller =
-      PageController(initialPage: 1, viewportFraction: 0.7);
 
   @override
   Widget build(BuildContext context) {
-    final MediaQueryData media = MediaQuery.of(context);
-
-    return SizedBox(
-      height: media.size.width * 0.6,
-      child: PageView.builder(
-        controller: controller,
-        itemCount: items.length,
-        onPageChanged: (value) => setState(() => currentIndex = value),
-        itemBuilder: (context, index) {
-          return Container(
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(24)),
-            child: Image.asset(
-              items[index],
-              fit: BoxFit.cover,
-            ),
-          );
-        },
-      ),
+    return Column(
+      children: [
+        CarouselSlider(
+          options: CarouselOptions(
+            enlargeCenterPage: true,
+            enableInfiniteScroll: true,
+            viewportFraction: 0.7,
+            autoPlay: true,
+            autoPlayInterval: const Duration(seconds: 5),
+            onPageChanged: (index, reason) =>
+                setState(() => currentIndex = index),
+          ),
+          items: items.map((i) {
+            return Builder(
+              builder: (BuildContext context) {
+                return Image.asset(
+                  i,
+                  fit: BoxFit.cover,
+                );
+              },
+            );
+          }).toList(),
+        ),
+        AnimatedSmoothIndicator(
+          activeIndex: currentIndex,
+          count: items.length,
+          effect: const ExpandingDotsEffect(
+            dotWidth: 9,
+            dotHeight: 9,
+            spacing: 6,
+            expansionFactor: 4.2,
+            activeDotColor: AppColor.primary,
+            dotColor: AppColor.neutral40,
+          ),
+        )
+      ],
     );
   }
 }
