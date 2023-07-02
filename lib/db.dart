@@ -51,4 +51,12 @@ class DB {
       return {...h, ...flag};
     }).toList();
   }
+
+  static List<String> get promotions {
+    return [
+      'assets/images/etc/promotion_1.png',
+      'assets/images/etc/promotion_2.png',
+      'assets/images/etc/promotion_3.png',
+    ];
+  }
 }

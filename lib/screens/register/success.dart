@@ -1,3 +1,4 @@
+import 'package:flora/constans/asset.dart';
 import 'package:flora/constans/space.dart';
 import 'package:flora/constans/style.dart';
 import 'package:flora/widgets/button.dart';
@@ -46,16 +47,12 @@ class SuccessWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      child: const Column(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            Icons.check_circle_outline_rounded,
-            size: 120,
-            color: Colors.green,
-          ),
-          SizedBox(height: 100),
-          Text(
+          Image.asset(Asset.checkedCircle, height: 120),
+          const SizedBox(height: 100),
+          const Text(
             'Đăng ký thành công!',
             style: AppStyle.textHeading2,
           ),

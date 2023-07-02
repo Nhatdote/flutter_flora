@@ -22,6 +22,7 @@ class IndexScreen extends StatefulWidget {
 class _IndexScreenState extends State<IndexScreen> {
   int _currentIndex = 0;
   CameraDescription? firstCamera;
+  List<CameraDescription> _cameras = <CameraDescription>[];
   bool hasPermission = false;
 
   final List<Map<String, dynamic>> _screens = [
@@ -90,11 +91,17 @@ class _IndexScreenState extends State<IndexScreen> {
     super.dispose();
   }
 
+  void _logError(String code, String? message) {
+    // ignore: avoid_print
+    print('Error: $code${message == null ? '' : '\nError Message: $message'}');
+  }
+
   Future<void> requestCamera() async {
-    WidgetsFlutterBinding.ensureInitialized();
-    final List<CameraDescription> cameras = await availableCameras();
-    if (cameras.isNotEmpty) {
-      firstCamera = cameras.first;
+    try {
+      WidgetsFlutterBinding.ensureInitialized();
+      _cameras = await availableCameras();
+    } on CameraException catch (e) {
+      _logError(e.code, e.description);
     }
   }
 
@@ -105,11 +112,11 @@ class _IndexScreenState extends State<IndexScreen> {
 
     return Scaffold(
       backgroundColor: AppColor.background,
-      appBar: AppBar(
-        title: currentScreen['title'],
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
+      // appBar: AppBar(
+      //   title: currentScreen['title'],
+      //   backgroundColor: Colors.transparent,
+      //   elevation: 0,
+      // ),
       body: IndexedStack(
         index: _currentIndex,
         children: _screens.map((h) => h['widget'] as Widget).toList(),
@@ -132,19 +139,11 @@ class _IndexScreenState extends State<IndexScreen> {
               await requestCamera();
             }
 
-            if (firstCamera != null) {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => FloraCameraScreen(camera: firstCamera!),
-                ),
-              );
-            } else {
-              Toast.show(
-                'No camera found!',
-                type: Toast.toastError,
-                behavior: SnackBarBehavior.floating,
-              );
-            }
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => FloraCameraScreen(cameras: _cameras),
+              ),
+            );
           },
           child: const FloraFloatingBtn(),
         ),
@@ -190,22 +189,6 @@ class _IndexScreenState extends State<IndexScreen> {
               .toList(),
         ),
       ),
-    );
-  }
-}
-
-class DisplayPictureScreen extends StatelessWidget {
-  final String imagePath;
-
-  const DisplayPictureScreen({super.key, required this.imagePath});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Display the Picture')),
-      // The image is stored as a file on the device. Use the `Image.file`
-      // constructor with the given path to display the image.
-      body: Image.file(File(imagePath)),
     );
   }
 }

@@ -14,12 +14,12 @@ class FloraFloatingBtn extends StatelessWidget {
         children: [
           Positioned.fill(
             left: 2,
-            child: Image.asset(Asset.iconFloraCamFour),
+            child: Image.asset(Asset.floraCamFour),
           ),
           Positioned.fill(
             bottom: 4,
             left: 1,
-            child: Image.asset(Asset.iconFloraCamLogo),
+            child: Image.asset(Asset.floraCamLogo),
           ),
         ],
       ),
