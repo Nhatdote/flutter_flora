@@ -1,7 +1,6 @@
 import 'package:flora/constans/asset.dart';
 import 'package:flora/constans/space.dart';
 import 'package:flora/db.dart';
-import 'package:flora/widgets/slider.dart';
 import 'package:flutter/material.dart';
 
 import '../../constans/color.dart';
@@ -16,12 +15,13 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      shrinkWrap: true,
-      children: const [
-        HeaderWidget(),
-        PromotionWidget(),
-      ],
+    return const SingleChildScrollView(
+      child: Column(
+        children: [
+          HeaderWidget(),
+          PromotionWidget(),
+        ],
+      ),
     );
   }
 }
