@@ -573,6 +573,7 @@ class _FloraCameraScreenState extends State<FloraCameraScreen>
   }
 
   /// Display a row of toggle to select the camera (or a message if no camera is available).
+  // ignore: no_leading_underscores_for_local_identifiers
   Widget _cameraTogglesRowWidget(List<CameraDescription> _cameras) {
     final List<Widget> toggles = <Widget>[];
 
@@ -997,6 +998,7 @@ class _FloraCameraScreenState extends State<FloraCameraScreen>
     }
 
     final VideoPlayerController vController = kIsWeb
+        // ignore: deprecated_member_use
         ? VideoPlayerController.network(videoFile!.path)
         : VideoPlayerController.file(File(videoFile!.path));
 

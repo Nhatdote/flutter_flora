@@ -5,7 +5,8 @@ import 'package:flora/db.dart';
 import 'package:flora/routes.dart';
 import 'package:flora/widgets/button.dart';
 import 'package:flutter/material.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+
+import '../widgets/indicator.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({super.key});
@@ -141,19 +142,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        AnimatedSmoothIndicator(
-                          activeIndex: _currentPage,
-                          count: items.length,
-                          effect: const ExpandingDotsEffect(
-                            dotWidth: 9,
-                            dotHeight: 9,
-                            spacing: 6,
-                            expansionFactor: 4.2,
-                            activeDotColor: AppColor.primary,
-                            dotColor: AppColor.neutral40,
-                          ),
-                          onDotClicked: (index) => onNext(index),
-                        ),
+                        AppIndicator(length: items.length, index: _currentPage),
                         Expanded(
                           child: PageView.builder(
                             physics: const NeverScrollableScrollPhysics(),

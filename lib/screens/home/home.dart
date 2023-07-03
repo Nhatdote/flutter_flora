@@ -2,8 +2,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flora/constans/asset.dart';
 import 'package:flora/constans/space.dart';
 import 'package:flora/db.dart';
+import 'package:flora/widgets/indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../constans/color.dart';
 
@@ -15,13 +15,29 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List<Map<String, String>> features = DB.features;
+
   @override
   Widget build(BuildContext context) {
-    return const SingleChildScrollView(
+    return SingleChildScrollView(
       child: Column(
         children: [
-          HeaderWidget(),
-          PromotionWidget(),
+          const HeaderWidget(),
+          const PromotionWidget(),
+          Padding(
+            padding: const EdgeInsets.only(top: AppSpace.xl),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: features
+                  .map(
+                    (h) => FeatureWidghet(
+                      label: h['label']!,
+                      icon: h['icon']!,
+                    ),
+                  )
+                  .toList(),
+            ),
+          ),
         ],
       ),
     );
@@ -64,18 +80,7 @@ class _PromotionWidgetState extends State<PromotionWidget> {
             );
           }).toList(),
         ),
-        AnimatedSmoothIndicator(
-          activeIndex: currentIndex,
-          count: items.length,
-          effect: const ExpandingDotsEffect(
-            dotWidth: 9,
-            dotHeight: 9,
-            spacing: 6,
-            expansionFactor: 4.2,
-            activeDotColor: AppColor.primary,
-            dotColor: AppColor.neutral40,
-          ),
-        )
+        AppIndicator(length: items.length, index: currentIndex)
       ],
     );
   }
@@ -169,6 +174,43 @@ class HeaderWidget extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class FeatureWidghet extends StatelessWidget {
+  final String label;
+  final String icon;
+
+  const FeatureWidghet({
+    super.key,
+    required this.label,
+    required this.icon,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          width: 60,
+          height: 60,
+          padding: const EdgeInsets.all(AppSpace.xs),
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Image.asset(
+            icon,
+            height: 40,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 4),
+          child: Text(label),
+        )
+      ],
     );
   }
 }

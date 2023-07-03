@@ -1,7 +1,5 @@
 import 'package:flora/screens/error.dart';
-import 'package:flora/screens/home/home.dart';
 import 'package:flora/screens/home/index.dart';
-import 'package:flora/screens/home/profile.dart';
 import 'package:flora/screens/login.dart';
 import 'package:flora/screens/onboarding.dart';
 import 'package:flora/screens/register/form.dart';

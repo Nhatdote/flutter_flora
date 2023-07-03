@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flora/constans/asset.dart';
 import 'package:flora/constans/color.dart';
@@ -108,7 +107,7 @@ class _IndexScreenState extends State<IndexScreen> {
   @override
   Widget build(BuildContext context) {
     Toast.initialize(context);
-    final Map<String, dynamic> currentScreen = _screens[_currentIndex];
+    // final Map<String, dynamic> currentScreen = _screens[_currentIndex];
 
     return Scaffold(
       backgroundColor: AppColor.background,
@@ -139,6 +138,7 @@ class _IndexScreenState extends State<IndexScreen> {
               await requestCamera();
             }
 
+            // ignore: use_build_context_synchronously
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) => FloraCameraScreen(cameras: _cameras),

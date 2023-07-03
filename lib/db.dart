@@ -59,4 +59,25 @@ class DB {
       'assets/images/etc/promotion_3.png',
     ];
   }
+
+  static List<Map<String, String>> get features {
+    return [
+      {
+        'icon': 'assets/images/etc/feature_location.png',
+        'label': 'Gần bạn',
+      },
+      {
+        'icon': 'assets/images/etc/feature_design.png',
+        'label': 'Thiết kế',
+      },
+      {
+        'icon': 'assets/images/etc/feature_strange.png',
+        'label': 'Độc lạ',
+      },
+      {
+        'icon': 'assets/images/etc/feature_other.png',
+        'label': 'Khác',
+      }
+    ];
+  }
 }
