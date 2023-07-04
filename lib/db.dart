@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flora/constans/asset.dart';
 import 'package:flora/constans/language.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -77,6 +78,74 @@ class DB {
       {
         'icon': 'assets/images/etc/feature_other.png',
         'label': 'Khác',
+      }
+    ];
+  }
+
+  static List<Map<String, dynamic>> getFlowers() {
+    final List<String> names = [
+      'Hoa hồng bó ruy băng',
+      'Hoa mẫu đơn bó giấy',
+      'Bó Hoa Hồng Tươi Elsie',
+      'Bó Hoa Tươi Thạch Anh Ngọt Ngào',
+      'Bó Hoa Tươi Aurora Ngọt Ngào',
+      'Cẩm tú cầu',
+      'Hoa cưới',
+      'Bó hoa tươi Lovely',
+      'Bó Hoa Tươi Hoa Anh Túc Tử Đinh Hương',
+      'Bó Hoa Tươi Sophie Daisy',
+      'Bó Hoa Everly tươi'
+    ];
+
+    List<Map<String, dynamic>> items = [];
+    Random random = Random();
+
+    for (int i = 1; i <= 11; i++) {
+      items.add({
+        'name': names[random.nextInt(names.length)],
+        'image': 'assets/images/layout/flower_$i.png',
+        'price': (((random.nextDouble() * 80).round() + 1) * 10000).toDouble(),
+        'star': double.parse((random.nextDouble() * 1 + 4).toStringAsFixed(1)),
+        'sold': random.nextInt(1000) + 50,
+        'discount': i % 2 == 0 ? null : random.nextInt(32)
+      });
+    }
+
+    items.shuffle(random);
+
+    return items;
+  }
+
+  static List<Map<String, dynamic>> get shopList {
+    return [
+      {
+        'image': 'assets/images/layout/shop_retro_vibes.png',
+        'distance': '0.2km',
+        'name': 'Retro Vibe',
+        'star': 4.3,
+        'evaluation': '10+',
+        'discount': 22
+      },
+      {
+        'image': 'assets/images/layout/shop_estelle.png',
+        'distance': '1.2km',
+        'name': 'Estelle',
+        'star': 3.9,
+        'evaluation': '10+'
+      },
+      {
+        'image': 'assets/images/layout/shop_sweet_pea.png',
+        'distance': '0.9km',
+        'name': 'Sweet pea',
+        'star': 4.8,
+        'evaluation': '10+'
+      },
+      {
+        'image': 'assets/images/layout/shop_petal_stem.png',
+        'distance': '0.5km',
+        'name': 'Petal & stem',
+        'star': 4.2,
+        'evaluation': '10+'
       }
     ];
   }

@@ -1,10 +1,13 @@
+import 'dart:math';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flora/constans/asset.dart';
 import 'package:flora/constans/space.dart';
 import 'package:flora/db.dart';
+import 'package:flora/widgets/card/product_card.dart';
+import 'package:flora/widgets/card/shop_card.dart';
+import 'package:flora/widgets/category_slider.dart';
 import 'package:flora/widgets/indicator.dart';
 import 'package:flutter/material.dart';
-
 import '../../constans/color.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -16,6 +19,17 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<Map<String, String>> features = DB.features;
+  List<Map<String, dynamic>> deal83 = DB.shopList;
+  List<Map<String, dynamic>> birthday = DB.shopList;
+  List<Map<String, dynamic>> flowers = DB.getFlowers();
+
+  @override
+  void initState() {
+    super.initState();
+
+    deal83.shuffle(Random());
+    birthday.shuffle(Random());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,20 +38,61 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           const HeaderWidget(),
           const PromotionWidget(),
-          Padding(
-            padding: const EdgeInsets.only(top: AppSpace.xl),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: features
-                  .map(
-                    (h) => FeatureWidghet(
-                      label: h['label']!,
-                      icon: h['icon']!,
-                    ),
-                  )
-                  .toList(),
+          const SizedBox(height: AppSpace.xl),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: features
+                .map(
+                  (h) => FeatureWidghet(
+                    label: h['label']!,
+                    icon: h['icon']!,
+                  ),
+                )
+                .toList(),
+          ),
+          const SizedBox(height: AppSpace.xl),
+          CategorySlider(
+            category: 'Deal dành riêng cho Mùng 8/3',
+            items: deal83,
+            builder: (item, {double? width}) => ShopCard(
+              width: width,
+              distance: item['distance'],
+              name: item['name'],
+              star: item['star'],
+              evaluation: item['evaluation'],
+              image: item['image'],
+              discount: item['discount'],
             ),
           ),
+          const SizedBox(height: AppSpace.xl),
+          CategorySlider(
+            category: 'Shop tặng Sinh nhật Người thương',
+            items: birthday,
+            builder: (item, {double? width}) => ShopCard(
+              width: width,
+              distance: item['distance'],
+              name: item['name'],
+              star: item['star'],
+              evaluation: item['evaluation'],
+              image: item['image'],
+              discount: item['discount'],
+            ),
+          ),
+          const SizedBox(height: AppSpace.xl),
+          CategorySlider(
+            category: 'Sản phẩm thịnh hành',
+            items: flowers,
+            builder: (item, {double? width}) => ProductCard(
+              width: width,
+              name: item['name'],
+              star: item['star'],
+              image: item['image'],
+              discount: item['discount'],
+              price: item['price'],
+              sold: item['sold'],
+            ),
+          ),
+          const SizedBox(height: AppSpace.xl),
         ],
       ),
     );
@@ -131,7 +186,7 @@ class HeaderWidget extends StatelessWidget {
                         child: Padding(
                           padding: EdgeInsets.only(left: AppSpace.xs),
                           child: Text(
-                            'Hi, Hong Ngoc!',
+                            'Hi, Nhatdote!',
                             style: TextStyle(
                               color: Colors.white,
                             ),

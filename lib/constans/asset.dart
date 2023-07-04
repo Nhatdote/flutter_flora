@@ -28,4 +28,6 @@ class Asset {
   static const String iconShoppingBasket =
       'assets/images/icons/shopping_basket.png';
   static const String iconComments = 'assets/images/icons/comments.png';
+  static const String iconStar = 'assets/images/icons/star.png';
+  static const String iconStarSolid = 'assets/images/icons/star_solid.png';
 }
