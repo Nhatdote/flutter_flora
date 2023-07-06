@@ -42,6 +42,7 @@ class ShopCard extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(6),
           width: _width,
+          height: _width * 1.4,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
             color: Colors.white,
@@ -59,8 +60,8 @@ class ShopCard extends StatelessWidget {
                 child: Image.asset(
                   image,
                   fit: BoxFit.cover,
-                  width: _width,
-                  height: _width * 0.9,
+                  width: _width - 12,
+                  height: _width * 0.8,
                 ),
               ),
               const SizedBox(height: 8),

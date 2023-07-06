@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flora/constans/asset.dart';
 import 'package:flora/constans/language.dart';
+import 'package:flora/widgets/card/product_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DB {
@@ -53,11 +54,23 @@ class DB {
     }).toList();
   }
 
-  static List<String> get promotions {
+  static List<Map<String, String>> get promotions {
     return [
-      'assets/images/etc/promotion_1.png',
-      'assets/images/etc/promotion_2.png',
-      'assets/images/etc/promotion_3.png',
+      {
+        'title': 'Hello summer',
+        'desc': 'Giảm giá vào hè với nhũng ưu đãi hấp dẫn',
+        'banner': 'assets/images/etc/promotion_1.png',
+      },
+      {
+        'title': 'Ngày lễ 8/3',
+        'desc': 'Giảm giá nhân ngày Quốc tế Phụ nữ mùng 8/3',
+        'banner': 'assets/images/etc/promotion_2.png',
+      },
+      {
+        'title': 'Black Friday 4.4',
+        'desc': 'Giảm giá nhân ngày Black Friday mùng 4 tháng 4',
+        'banner': 'assets/images/etc/promotion_3.png',
+      },
     ];
   }
 
@@ -82,7 +95,7 @@ class DB {
     ];
   }
 
-  static List<Map<String, dynamic>> getFlowers() {
+  static List<ProductModel> getFlowers() {
     final List<String> names = [
       'Hoa hồng bó ruy băng',
       'Hoa mẫu đơn bó giấy',
@@ -97,18 +110,21 @@ class DB {
       'Bó Hoa Everly tươi'
     ];
 
-    List<Map<String, dynamic>> items = [];
+    List<ProductModel> items = [];
     Random random = Random();
 
     for (int i = 1; i <= 11; i++) {
-      items.add({
-        'name': names[random.nextInt(names.length)],
-        'image': 'assets/images/layout/flower_$i.png',
-        'price': (((random.nextDouble() * 80).round() + 1) * 10000).toDouble(),
-        'star': double.parse((random.nextDouble() * 1 + 4).toStringAsFixed(1)),
-        'sold': random.nextInt(1000) + 50,
-        'discount': i % 2 == 0 ? null : random.nextInt(32)
-      });
+      items.add(
+        ProductModel(
+            image: 'assets/images/layout/flower_$i.png',
+            name: names[random.nextInt(names.length)],
+            price:
+                (((random.nextDouble() * 80).round() + 1) * 10000).toDouble(),
+            star:
+                double.parse((random.nextDouble() * 1 + 4).toStringAsFixed(1)),
+            sold: random.nextInt(1000) + 50,
+            discount: i % 2 == 0 ? null : random.nextInt(32)),
+      );
     }
 
     items.shuffle(random);

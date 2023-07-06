@@ -7,22 +7,12 @@ import 'package:flutter/material.dart';
 import '../discount_flag.dart';
 
 class ProductCard extends StatelessWidget {
-  final String image;
-  final String name;
-  final double price;
-  final double star;
-  final int sold;
-  final int? discount;
+  final ProductModel product;
   final double? width;
 
   const ProductCard({
     super.key,
-    required this.image,
-    required this.name,
-    required this.star,
-    required this.price,
-    required this.sold,
-    this.discount,
+    required this.product,
     this.width,
   });
 
@@ -32,8 +22,8 @@ class ProductCard extends StatelessWidget {
     double _width = width ?? 0;
     double rootPrice = 0.0;
 
-    if (discount != null) {
-      rootPrice = price + price * discount! / 100;
+    if (product.discount != null) {
+      rootPrice = product.price + product.price * product.discount! / 100;
     }
 
     if (_width == 0) {
@@ -41,8 +31,9 @@ class ProductCard extends StatelessWidget {
       _width = (size.width - 100) / 2;
     }
 
-    Widget discountFlag =
-        discount == null ? Container() : DiscountFlag(discount: discount!);
+    Widget discountFlag = product.discount == null
+        ? Container()
+        : DiscountFlag(discount: product.discount!);
 
     return Stack(
       children: [
@@ -64,17 +55,16 @@ class ProductCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Image.asset(
-                  image,
-                  fit: BoxFit.cover,
-                  width: _width,
-                  height: _width * 0.9,
+                  product.image,
+                  height: _width * 0.6,
+                  fit: BoxFit.fitHeight,
                 ),
               ),
               const SizedBox(height: 8),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 4),
                 child: Text(
-                  name,
+                  product.name,
                   style: AppStyle.textLabel.copyWith(fontSize: 14),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -85,7 +75,7 @@ class ProductCard extends StatelessWidget {
                   child: Row(
                     children: [
                       Text(
-                        Fs.vndFormat(price),
+                        Fs.vndFormat(product.price),
                         style: AppStyle.textLabel,
                       ),
                       const Spacer(),
@@ -112,7 +102,7 @@ class ProductCard extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(left: 4),
                       child: Text(
-                        "$star",
+                        "${product.star}",
                         style: const TextStyle(
                             fontSize: AppStyle.fontSizeSm,
                             fontWeight: FontWeight.w500),
@@ -130,7 +120,7 @@ class ProductCard extends StatelessWidget {
                     ),
                     const Spacer(),
                     Text(
-                      "$sold Đã bán",
+                      "${product.sold} Đã bán",
                       style: const TextStyle(fontSize: AppStyle.fontSizeSm),
                     ),
                   ],
@@ -147,4 +137,22 @@ class ProductCard extends StatelessWidget {
       ],
     );
   }
+}
+
+class ProductModel {
+  final String image;
+  final String name;
+  final double price;
+  final double star;
+  final int sold;
+  final int? discount;
+
+  ProductModel({
+    required this.image,
+    required this.name,
+    required this.price,
+    required this.star,
+    required this.sold,
+    this.discount,
+  });
 }

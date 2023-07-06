@@ -4,7 +4,7 @@ import '../constans/space.dart';
 
 class CategorySlider extends StatelessWidget {
   final String? category;
-  final List<Map<String, dynamic>> items;
+  final List<dynamic> items;
   final Widget Function(dynamic item, {double? width}) builder;
 
   const CategorySlider({
@@ -47,7 +47,7 @@ class CategorySlider extends StatelessWidget {
       children: [
         title,
         SizedBox(
-          height: width * 1.5,
+          height: width * 1.2,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             itemCount: items.length,

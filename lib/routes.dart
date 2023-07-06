@@ -2,6 +2,7 @@ import 'package:flora/screens/error.dart';
 import 'package:flora/screens/home/index.dart';
 import 'package:flora/screens/login.dart';
 import 'package:flora/screens/onboarding.dart';
+import 'package:flora/screens/promotion.dart';
 import 'package:flora/screens/register/form.dart';
 import 'package:flora/screens/register/otp.dart';
 import 'package:flora/screens/register/phone.dart';
@@ -19,6 +20,7 @@ class AppRoute {
   static const String registerForm = 'register/form';
   static const String registerSuccess = '/register/success';
   static const String login = '/login';
+  static const String promotion = '/promotion';
 
   // Routes is not have any agruments
   static Map<String, Widget> simpleRoutes = {
@@ -32,25 +34,32 @@ class AppRoute {
 
   static onGenerateRoute(RouteSettings settings) {
     final String? routeName = settings.name;
-    final Map<String, String>? arguments =
-        settings.arguments as Map<String, String>?;
+    final Map<String, dynamic>? arguments =
+        settings.arguments as Map<String, dynamic>?;
     final Map<String, Widget> routes = AppRoute.simpleRoutes;
     final Widget? screen;
 
     switch (routeName) {
       case AppRoute.registerOtp:
         if (arguments == null || arguments['phone'] == null) {
-          return errprPage();
+          return errorPage();
         }
 
         screen = RegisterOtpScreen(phone: arguments['phone']!);
         break;
       case AppRoute.registerForm:
         if (arguments == null || arguments['phone'] == null) {
-          return errprPage();
+          return errorPage();
         }
 
         screen = RegisterFormScreen(phone: arguments['phone']!);
+        break;
+      case AppRoute.promotion:
+        if (arguments == null || arguments['promotion'] == null) {
+          return errorPage();
+        }
+
+        screen = PromotionScreen(promotion: arguments['promotion']!);
         break;
       default:
         screen = routes.containsKey(routeName) ? routes[routeName] : null;
@@ -67,7 +76,7 @@ class AppRoute {
     );
   }
 
-  static errprPage({String? message, String? image}) {
+  static errorPage({String? message, String? image}) {
     return MaterialPageRoute<dynamic>(
       builder: (context) => ErrorScreen(
         messsage: message,

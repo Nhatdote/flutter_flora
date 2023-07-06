@@ -2,7 +2,9 @@ import 'dart:math';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flora/constans/asset.dart';
 import 'package:flora/constans/space.dart';
+import 'package:flora/constans/style.dart';
 import 'package:flora/db.dart';
+import 'package:flora/routes.dart';
 import 'package:flora/widgets/card/product_card.dart';
 import 'package:flora/widgets/card/shop_card.dart';
 import 'package:flora/widgets/category_slider.dart';
@@ -21,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Map<String, String>> features = DB.features;
   List<Map<String, dynamic>> deal83 = DB.shopList;
   List<Map<String, dynamic>> birthday = DB.shopList;
-  List<Map<String, dynamic>> flowers = DB.getFlowers();
+  List<ProductModel> flowers = DB.getFlowers();
 
   @override
   void initState() {
@@ -84,12 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
             items: flowers,
             builder: (item, {double? width}) => ProductCard(
               width: width,
-              name: item['name'],
-              star: item['star'],
-              image: item['image'],
-              discount: item['discount'],
-              price: item['price'],
-              sold: item['sold'],
+              product: item,
             ),
           ),
           const SizedBox(height: AppSpace.xl),
@@ -107,7 +104,7 @@ class PromotionWidget extends StatefulWidget {
 }
 
 class _PromotionWidgetState extends State<PromotionWidget> {
-  final List<String> items = DB.promotions;
+  final List<Map<String, String>> items = DB.promotions;
   int currentIndex = 1;
 
   @override
@@ -119,7 +116,7 @@ class _PromotionWidgetState extends State<PromotionWidget> {
             enlargeCenterPage: true,
             enableInfiniteScroll: true,
             viewportFraction: 0.7,
-            autoPlay: true,
+            // autoPlay: true,
             autoPlayInterval: const Duration(seconds: 5),
             onPageChanged: (index, reason) =>
                 setState(() => currentIndex = index),
@@ -127,9 +124,24 @@ class _PromotionWidgetState extends State<PromotionWidget> {
           items: items.map((i) {
             return Builder(
               builder: (BuildContext context) {
-                return Image.asset(
-                  i,
-                  fit: BoxFit.cover,
+                return GestureDetector(
+                  onTap: () => Navigator.pushNamed(
+                    context,
+                    AppRoute.promotion,
+                    arguments: {'promotion': i},
+                  ),
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(vertical: AppSpace.xl),
+                    decoration: BoxDecoration(
+                      boxShadow: const [AppStyle.boxShadowSm],
+                      borderRadius: BorderRadius.circular(24),
+                    ),
+                    clipBehavior: Clip.hardEdge,
+                    child: Image.asset(
+                      i['banner']!,
+                      fit: BoxFit.fitHeight,
+                    ),
+                  ),
                 );
               },
             );
