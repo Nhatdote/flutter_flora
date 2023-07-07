@@ -5,6 +5,7 @@ import 'package:flora/constans/space.dart';
 import 'package:flora/constans/style.dart';
 import 'package:flora/db.dart';
 import 'package:flora/routes.dart';
+import 'package:flora/slivers/app_header.dart';
 import 'package:flora/widgets/card/product_card.dart';
 import 'package:flora/widgets/card/shop_card.dart';
 import 'package:flora/widgets/category_slider.dart';
@@ -35,64 +36,152 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          const HeaderWidget(),
-          const PromotionWidget(),
-          const SizedBox(height: AppSpace.xl),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: features
-                .map(
-                  (h) => FeatureWidghet(
-                    label: h['label']!,
-                    icon: h['icon']!,
-                  ),
-                )
-                .toList(),
-          ),
-          const SizedBox(height: AppSpace.xl),
-          CategorySlider(
-            category: 'Deal dành riêng cho Mùng 8/3',
-            items: deal83,
-            builder: (item, {double? width}) => ShopCard(
-              width: width,
-              distance: item['distance'],
-              name: item['name'],
-              star: item['star'],
-              evaluation: item['evaluation'],
-              image: item['image'],
-              discount: item['discount'],
+    return CustomScrollView(
+      slivers: [
+        const SliverAppHeader(),
+        const SliverToBoxAdapter(
+          child: PromotionWidget(),
+        ),
+        SliverList.list(
+          children: [
+            const SizedBox(height: AppSpace.xl),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: features
+                  .map(
+                    (h) => FeatureWidghet(
+                      label: h['label']!,
+                      icon: h['icon']!,
+                    ),
+                  )
+                  .toList(),
             ),
-          ),
-          const SizedBox(height: AppSpace.xl),
-          CategorySlider(
-            category: 'Shop tặng Sinh nhật Người thương',
-            items: birthday,
-            builder: (item, {double? width}) => ShopCard(
-              width: width,
-              distance: item['distance'],
-              name: item['name'],
-              star: item['star'],
-              evaluation: item['evaluation'],
-              image: item['image'],
-              discount: item['discount'],
+            const SizedBox(height: AppSpace.xl),
+            CategorySlider(
+              category: 'Deal dành riêng cho Mùng 8/3',
+              items: deal83,
+              builder: (item, {double? width}) => ShopCard(
+                width: width,
+                distance: item['distance'],
+                name: item['name'],
+                star: item['star'],
+                evaluation: item['evaluation'],
+                image: item['image'],
+                discount: item['discount'],
+              ),
             ),
-          ),
-          const SizedBox(height: AppSpace.xl),
-          CategorySlider(
-            category: 'Sản phẩm thịnh hành',
-            items: flowers,
-            builder: (item, {double? width}) => ProductCard(
-              width: width,
-              product: item,
+            const SizedBox(height: AppSpace.xl),
+            CategorySlider(
+              category: 'Shop tặng Sinh nhật Người thương',
+              items: birthday,
+              builder: (item, {double? width}) => ShopCard(
+                width: width,
+                distance: item['distance'],
+                name: item['name'],
+                star: item['star'],
+                evaluation: item['evaluation'],
+                image: item['image'],
+                discount: item['discount'],
+              ),
             ),
+            const SizedBox(height: AppSpace.xl),
+            const SizedBox(height: AppSpace.xl),
+          ],
+        ),
+        // SliverList.separated(
+        //   itemCount: flowers.length,
+        //   itemBuilder: (context, index) {
+        //     return ProductCard(product: flowers[index]);
+        //   },
+        //   separatorBuilder: (context, index) =>
+        //       const SizedBox(width: AppSpace.md),
+        // ),
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (BuildContext context, int index) {
+              return ProductCard(product: flowers[index]);
+            },
+            childCount: flowers.length,
           ),
-          const SizedBox(height: AppSpace.xl),
-        ],
-      ),
+        ),
+        // SliverPadding(
+        //   padding: const EdgeInsets.all(AppSpace.xl),
+        //   sliver: SliverGrid(
+        //     delegate: SliverChildBuilderDelegate(
+        //       (BuildContext context, int index) {
+        //         return ProductCard(product: flowers[index]);
+        //       },
+        //       childCount: flowers.length,
+        //     ),
+        //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        //       crossAxisCount: 2,
+        //       mainAxisSpacing: AppSpace.md,
+        //       crossAxisSpacing: AppSpace.md,
+        //       childAspectRatio: 0.7,
+        //     ),
+        //   ),
+        // )
+      ],
     );
+
+    // return SingleChildScrollView(
+    //   child: Column(
+    //     children: [
+    //       const HeaderWidget(),
+    //       const PromotionWidget(),
+    //       const SizedBox(height: AppSpace.xl),
+    //       Row(
+    //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    //         children: features
+    //             .map(
+    //               (h) => FeatureWidghet(
+    //                 label: h['label']!,
+    //                 icon: h['icon']!,
+    //               ),
+    //             )
+    //             .toList(),
+    //       ),
+    //       const SizedBox(height: AppSpace.xl),
+    //       CategorySlider(
+    //         category: 'Deal dành riêng cho Mùng 8/3',
+    //         items: deal83,
+    //         builder: (item, {double? width}) => ShopCard(
+    //           width: width,
+    //           distance: item['distance'],
+    //           name: item['name'],
+    //           star: item['star'],
+    //           evaluation: item['evaluation'],
+    //           image: item['image'],
+    //           discount: item['discount'],
+    //         ),
+    //       ),
+    //       const SizedBox(height: AppSpace.xl),
+    //       CategorySlider(
+    //         category: 'Shop tặng Sinh nhật Người thương',
+    //         items: birthday,
+    //         builder: (item, {double? width}) => ShopCard(
+    //           width: width,
+    //           distance: item['distance'],
+    //           name: item['name'],
+    //           star: item['star'],
+    //           evaluation: item['evaluation'],
+    //           image: item['image'],
+    //           discount: item['discount'],
+    //         ),
+    //       ),
+    //       const SizedBox(height: AppSpace.xl),
+    // CategorySlider(
+    //   category: 'Sản phẩm thịnh hành',
+    //   items: flowers,
+    //   builder: (item, {double? width}) => ProductCard(
+    //     width: width,
+    //     product: item,
+    //   ),
+    // ),
+    // const SizedBox(height: AppSpace.xl),
+    //     ],
+    //   ),
+    // );
   }
 }
 
@@ -149,98 +238,6 @@ class _PromotionWidgetState extends State<PromotionWidget> {
         ),
         AppIndicator(length: items.length, index: currentIndex)
       ],
-    );
-  }
-}
-
-class HeaderWidget extends StatelessWidget {
-  const HeaderWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        color: AppColor.primary,
-      ),
-      width: double.infinity,
-      child: Stack(
-        children: [
-          Positioned(
-            top: 0,
-            left: 0,
-            child: Image.asset(
-              Asset.headerSmoke1,
-              fit: BoxFit.cover,
-              width: 120,
-            ),
-          ),
-          Positioned(
-            left: 0,
-            bottom: 0,
-            right: 0,
-            child: Image.asset(
-              Asset.headerSmoke2,
-              fit: BoxFit.cover,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(AppSpace.xl),
-            child: SafeArea(
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(AppSpace.xs),
-                        child: Image.asset(Asset.logo, width: 25),
-                      ),
-                      const Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.only(left: AppSpace.xs),
-                          child: Text(
-                            'Hi, Nhatdote!',
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Image.asset(
-                        Asset.iconShoppingBasket,
-                        color: Colors.white,
-                      ),
-                      const SizedBox(width: AppSpace.xs),
-                      Image.asset(
-                        Asset.iconComments,
-                        color: Colors.white,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: AppSpace.md),
-                  TextField(
-                    decoration: InputDecoration(
-                      prefixIcon: Image.asset(Asset.iconSearch),
-                      hintText: 'Tìm kiếm sản phẩm ở đâu...',
-                      isDense: false,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12.0),
-                        borderSide: const BorderSide(color: AppColor.neutral10),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12.0),
-                        borderSide: const BorderSide(color: AppColor.primary),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

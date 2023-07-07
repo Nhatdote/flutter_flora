@@ -81,7 +81,7 @@ class PromotionScreen extends StatelessWidget {
                   crossAxisCount: 2,
                   crossAxisSpacing: AppSpace.md,
                   mainAxisSpacing: AppSpace.md,
-                  childAspectRatio: 0.9,
+                  childAspectRatio: 0.65,
                 ),
                 itemCount: items.length,
                 itemBuilder: (context, index) {

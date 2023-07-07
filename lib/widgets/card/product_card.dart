@@ -18,17 +18,16 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // ignore: no_leading_underscores_for_local_identifiers
-    double _width = width ?? 0;
+    double cardWidth = width ?? 0;
     double rootPrice = 0.0;
 
     if (product.discount != null) {
       rootPrice = product.price + product.price * product.discount! / 100;
     }
 
-    if (_width == 0) {
+    if (cardWidth == 0) {
       final Size size = MediaQuery.of(context).size;
-      _width = (size.width - 100) / 2;
+      cardWidth = (size.width - 60) / 2;
     }
 
     Widget discountFlag = product.discount == null
@@ -39,7 +38,6 @@ class ProductCard extends StatelessWidget {
       children: [
         Container(
           padding: const EdgeInsets.all(6),
-          width: _width,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
             color: Colors.white,
@@ -51,12 +49,13 @@ class ProductCard extends StatelessWidget {
               Container(
                 alignment: Alignment.center,
                 clipBehavior: Clip.hardEdge,
+                width: cardWidth,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Image.asset(
                   product.image,
-                  height: _width * 0.6,
+                  height: cardWidth - 12,
                   fit: BoxFit.fitHeight,
                 ),
               ),
