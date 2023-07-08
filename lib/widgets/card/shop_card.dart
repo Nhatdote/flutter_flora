@@ -5,44 +5,30 @@ import 'package:flora/widgets/discount_flag.dart';
 import 'package:flutter/material.dart';
 
 class ShopCard extends StatelessWidget {
-  final String distance;
-  final String name;
-  final double star;
-  final String evaluation;
-  final String image;
+  final ShopModel shop;
   final double? width;
-  final int? discount;
 
   const ShopCard({
     super.key,
-    required this.distance,
-    required this.name,
-    required this.star,
-    required this.evaluation,
-    required this.image,
+    required this.shop,
     this.width,
-    this.discount,
   });
 
   @override
   Widget build(BuildContext context) {
-    // ignore: no_leading_underscores_for_local_identifiers
-    double _width = width ?? 0;
+    double cardWidth =
+        width != null ? width! : (MediaQuery.of(context).size.width - 60) / 2;
 
-    if (_width == 0) {
-      final Size size = MediaQuery.of(context).size;
-      _width = (size.width - 100) / 2;
-    }
-
-    Widget discountFlag =
-        discount == null ? Container() : DiscountFlag(discount: discount!);
+    Widget discountFlag = shop.discount == null
+        ? Container()
+        : DiscountFlag(discount: shop.discount!);
 
     return Stack(
       children: [
         Container(
           padding: const EdgeInsets.all(6),
-          width: _width,
-          height: _width * 1.4,
+          width: cardWidth,
+          height: double.infinity,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
             color: Colors.white,
@@ -58,21 +44,21 @@ class ShopCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Image.asset(
-                  image,
+                  shop.image,
                   fit: BoxFit.cover,
-                  width: _width - 12,
-                  height: _width * 0.8,
+                  width: cardWidth - 12,
+                  height: cardWidth * 0.8,
                 ),
               ),
               const SizedBox(height: 8),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 4),
-                child: Text(distance, style: AppStyle.textHint),
+                child: Text(shop.distance, style: AppStyle.textHint),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 4),
                 child: Text(
-                  name,
+                  shop.name,
                   style: AppStyle.textLabel,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -91,7 +77,7 @@ class ShopCard extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(left: 4),
                       child: Text(
-                        "$star",
+                        "${shop.star}",
                         style: const TextStyle(
                             fontSize: AppStyle.fontSizeSm,
                             fontWeight: FontWeight.w500),
@@ -109,7 +95,7 @@ class ShopCard extends StatelessWidget {
                     ),
                     const Spacer(),
                     Text(
-                      "$evaluation Đánh giá",
+                      "${shop.evaluation} Đánh giá",
                       style: const TextStyle(fontSize: AppStyle.fontSizeSm),
                     ),
                   ],
@@ -126,4 +112,22 @@ class ShopCard extends StatelessWidget {
       ],
     );
   }
+}
+
+class ShopModel {
+  ShopModel({
+    required this.distance,
+    required this.name,
+    required this.star,
+    required this.evaluation,
+    required this.image,
+    this.discount,
+  });
+
+  final String distance;
+  final String name;
+  final double star;
+  final String evaluation;
+  final String image;
+  final int? discount;
 }

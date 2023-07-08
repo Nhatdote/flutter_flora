@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flora/constans/asset.dart';
 import 'package:flora/constans/language.dart';
 import 'package:flora/widgets/card/product_card.dart';
+import 'package:flora/widgets/card/shop_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DB {
@@ -116,14 +117,13 @@ class DB {
     for (int i = 1; i <= 10; i++) {
       items.add(
         ProductModel(
-            image: 'assets/images/layout/flower_$i.png',
-            name: names[random.nextInt(names.length)],
-            price:
-                (((random.nextDouble() * 80).round() + 1) * 10000).toDouble(),
-            star:
-                double.parse((random.nextDouble() * 1 + 4).toStringAsFixed(1)),
-            sold: random.nextInt(1000) + 50,
-            discount: i % 2 == 0 ? null : random.nextInt(32)),
+          image: 'assets/images/layout/flower_$i.png',
+          name: names[random.nextInt(names.length)],
+          price: (((random.nextDouble() * 80).round() + 1) * 10000).toDouble(),
+          star: double.parse((random.nextDouble() * 1 + 4).toStringAsFixed(1)),
+          sold: random.nextInt(1000) + 50,
+          discount: i % 2 == 0 ? null : random.nextInt(32),
+        ),
       );
     }
 
@@ -132,37 +132,39 @@ class DB {
     return items;
   }
 
-  static List<Map<String, dynamic>> get shopList {
-    return [
-      {
-        'image': 'assets/images/layout/shop_retro_vibes.png',
-        'distance': '0.2km',
-        'name': 'Retro Vibe',
-        'star': 4.3,
-        'evaluation': '10+',
-        'discount': 22
-      },
-      {
-        'image': 'assets/images/layout/shop_estelle.png',
-        'distance': '1.2km',
-        'name': 'Estelle',
-        'star': 3.9,
-        'evaluation': '10+'
-      },
-      {
-        'image': 'assets/images/layout/shop_sweet_pea.png',
-        'distance': '0.9km',
-        'name': 'Sweet pea',
-        'star': 4.8,
-        'evaluation': '10+'
-      },
-      {
-        'image': 'assets/images/layout/shop_petal_stem.png',
-        'distance': '0.5km',
-        'name': 'Petal & stem',
-        'star': 4.2,
-        'evaluation': '10+'
-      }
+  static List<ShopModel> get shopList {
+    List<String> images = [
+      'assets/images/layout/shop_retro_vibes.png',
+      'assets/images/layout/shop_estelle.png',
+      'assets/images/layout/shop_sweet_pea.png',
+      'assets/images/layout/shop_petal_stem.png',
     ];
+
+    Random random = Random();
+
+    List<ShopModel> items = [];
+
+    for (int i = 0; i < images.length; i++) {
+      String h = images[i];
+      items.add(
+        ShopModel(
+          distance: '${random.nextDouble() * 10}km',
+          name: h
+              .split('/')
+              .last
+              .split('.')[0]
+              .split('_')
+              .skip(1)
+              .map((h) => h.substring(0, 1).toUpperCase() + h.substring(1))
+              .join(' '),
+          star: double.parse((random.nextDouble() * 5).toStringAsFixed(1)),
+          evaluation: '10+',
+          image: h,
+          discount: i != 0 ? null : random.nextInt(32),
+        ),
+      );
+    }
+
+    return items;
   }
 }

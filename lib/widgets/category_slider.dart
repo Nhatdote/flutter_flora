@@ -6,19 +6,18 @@ class CategorySlider extends StatelessWidget {
   final String? category;
   final List<dynamic> items;
   final Widget Function(dynamic item, {double? width}) builder;
+  final String type;
 
   const CategorySlider({
     super.key,
     this.category,
     required this.items,
     required this.builder,
+    required this.type,
   });
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-    final double width = (size.width - AppSpace.xl * 2 - AppSpace.sm * 2) / 2;
-
     Widget title = Container();
     if (category != null) {
       title = Padding(
@@ -42,12 +41,21 @@ class CategorySlider extends StatelessWidget {
       );
     }
 
+    double width = (MediaQuery.of(context).size.width - 60) / 2;
+    double height;
+
+    if (type == 'product') {
+      height = width * 1.5;
+    } else {
+      height = width * 1.4;
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         title,
         SizedBox(
-          height: width * 1.2,
+          height: height,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             itemCount: items.length,

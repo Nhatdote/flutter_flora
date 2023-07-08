@@ -3,7 +3,6 @@ import 'package:flora/constans/color.dart';
 import 'package:flora/constans/style.dart';
 import 'package:flora/shared/functions.dart';
 import 'package:flutter/material.dart';
-
 import '../discount_flag.dart';
 
 class ProductCard extends StatelessWidget {
@@ -18,16 +17,12 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double cardWidth = width ?? 0;
+    double cardWidth =
+        width != null ? width! : (MediaQuery.of(context).size.width - 60) / 2;
     double rootPrice = 0.0;
 
     if (product.discount != null) {
       rootPrice = product.price + product.price * product.discount! / 100;
-    }
-
-    if (cardWidth == 0) {
-      final Size size = MediaQuery.of(context).size;
-      cardWidth = (size.width - 60) / 2;
     }
 
     Widget discountFlag = product.discount == null
@@ -38,6 +33,8 @@ class ProductCard extends StatelessWidget {
       children: [
         Container(
           padding: const EdgeInsets.all(6),
+          width: cardWidth,
+          height: double.infinity,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
             color: Colors.white,
