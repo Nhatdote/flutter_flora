@@ -80,18 +80,22 @@ class DB {
       {
         'icon': 'assets/images/etc/feature_location.png',
         'label': 'Gần bạn',
+        'route': '/near-you',
       },
       {
         'icon': 'assets/images/etc/feature_design.png',
         'label': 'Thiết kế',
+        'route': '/near-you',
       },
       {
         'icon': 'assets/images/etc/feature_strange.png',
         'label': 'Độc lạ',
+        'route': '/near-you',
       },
       {
         'icon': 'assets/images/etc/feature_other.png',
         'label': 'Khác',
+        'route': '/near-you',
       }
     ];
   }
@@ -148,7 +152,8 @@ class DB {
       String h = images[i];
       items.add(
         ShopModel(
-          distance: '${random.nextDouble() * 10}km',
+          distance:
+              '${double.parse((random.nextDouble() * 10).toStringAsFixed(1))}km',
           name: h
               .split('/')
               .last

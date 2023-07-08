@@ -1,25 +1,8 @@
 import 'package:flutter/material.dart';
-
 import '../constans/asset.dart';
 import '../constans/color.dart';
 import '../constans/space.dart';
 import '../constans/style.dart';
-
-class SliverAppHeader extends StatelessWidget {
-  const SliverAppHeader({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return SliverPersistentHeader(
-      pinned: true,
-      floating: true,
-      delegate: AppPersistentHeaderDelegate(
-        minHeight: 110,
-        maxHeight: 200,
-      ),
-    );
-  }
-}
 
 class AppPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
   final double minHeight;
@@ -63,7 +46,7 @@ class ExpandedHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget AnimatedText = Padding(
+    Widget animatedText = Padding(
       padding: const EdgeInsets.only(left: AppSpace.xs),
       child: AnimatedAlign(
         alignment: !isExpanded ? Alignment.center : Alignment.topLeft,
@@ -122,7 +105,7 @@ class ExpandedHeader extends StatelessWidget {
                         padding: const EdgeInsets.all(AppSpace.xs),
                         child: Image.asset(Asset.logo, width: 25),
                       ),
-                      Expanded(child: AnimatedText),
+                      Expanded(child: animatedText),
                       Image.asset(
                         Asset.iconShoppingBasket,
                         color: Colors.white,
@@ -167,70 +150,45 @@ class ExpandedHeader extends StatelessWidget {
   }
 }
 
-class CollapsedChild extends StatelessWidget {
-  const CollapsedChild({super.key});
+class SliverAppHeader extends StatelessWidget {
+  const SliverAppHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        color: AppColor.primary,
-      ),
-      width: double.infinity,
-      child: Stack(
-        children: [
-          Positioned(
-            top: 0,
-            left: 0,
-            child: Image.asset(
-              Asset.headerSmoke1,
-              fit: BoxFit.cover,
-              width: 120,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(
-              left: AppSpace.xl,
-              right: AppSpace.xl,
-            ),
-            child: SafeArea(
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(AppSpace.xs),
-                        child: Image.asset(Asset.logo, width: 25),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: AppSpace.xs),
-                          child: Text(
-                            'Hi, Nhatdote!',
-                            textAlign: TextAlign.center,
-                            style: AppStyle.textHeading3.copyWith(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Image.asset(
-                        Asset.iconShoppingBasket,
-                        color: Colors.white,
-                      ),
-                      const SizedBox(width: AppSpace.xs),
-                      Image.asset(
-                        Asset.iconComments,
-                        color: Colors.white,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
+    return SliverPersistentHeader(
+      pinned: true,
+      floating: true,
+      delegate: AppPersistentHeaderDelegate(
+        minHeight: 110,
+        maxHeight: 200,
       ),
     );
   }
+}
+
+class SimpleAppHeader extends StatelessWidget implements PreferredSizeWidget {
+  final String title;
+
+  const SimpleAppHeader(
+    this.title, {
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      title: Text(
+        title,
+        style: AppStyle.textHeading2,
+      ),
+      iconTheme: const IconThemeData(
+        color: AppColor.neutral,
+      ),
+      backgroundColor: AppColor.background,
+      elevation: 0,
+    );
+  }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

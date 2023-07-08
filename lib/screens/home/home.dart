@@ -1,10 +1,11 @@
 import 'dart:math';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flora/constans/constan.dart';
 import 'package:flora/constans/space.dart';
 import 'package:flora/constans/style.dart';
 import 'package:flora/db.dart';
 import 'package:flora/routes.dart';
-import 'package:flora/slivers/app_header.dart';
+import 'package:flora/widgets/app_header.dart';
 import 'package:flora/widgets/card/product_card.dart';
 import 'package:flora/widgets/card/shop_card.dart';
 import 'package:flora/widgets/category_slider.dart';
@@ -49,9 +50,12 @@ class _HomeScreenState extends State<HomeScreen> {
               category: 'Deal dành riêng cho Mùng 8/3',
               items: deal83,
               type: 'shop',
-              builder: (item, {double? width}) => ShopCard(
-                width: width,
-                shop: item,
+              builder: (item, {double? width}) => AspectRatio(
+                aspectRatio: AppConstant.shopRatio,
+                child: ShopCard(
+                  width: width,
+                  shop: item,
+                ),
               ),
             ),
             const SizedBox(height: AppSpace.xl),
@@ -59,9 +63,12 @@ class _HomeScreenState extends State<HomeScreen> {
               category: 'Shop tặng Sinh nhật Người thương',
               items: birthday,
               type: 'shop',
-              builder: (item, {double? width}) => ShopCard(
-                width: width,
-                shop: item,
+              builder: (item, {double? width}) => AspectRatio(
+                aspectRatio: AppConstant.shopRatio,
+                child: ShopCard(
+                  width: width,
+                  shop: item,
+                ),
               ),
             ),
             const SizedBox(height: AppSpace.xl),
@@ -69,9 +76,12 @@ class _HomeScreenState extends State<HomeScreen> {
               category: 'Sản phẩm thịnh hành',
               items: flowers,
               type: 'product',
-              builder: (item, {double? width}) => ProductCard(
-                width: width,
-                product: item,
+              builder: (item, {double? width}) => AspectRatio(
+                aspectRatio: AppConstant.productRatio,
+                child: ProductCard(
+                  width: width,
+                  product: item,
+                ),
               ),
             ),
             const SizedBox(height: AppSpace.xl),
@@ -152,28 +162,31 @@ class FeatureWidghet extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: features.map((h) {
-        return Column(
-          children: [
-            Container(
-              width: 60,
-              height: 60,
-              padding: const EdgeInsets.all(AppSpace.xs),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(15),
-                boxShadow: const [AppStyle.boxShadowSm],
+        return GestureDetector(
+          onTap: () => Navigator.pushNamed(context, h['route']!),
+          child: Column(
+            children: [
+              Container(
+                width: 60,
+                height: 60,
+                padding: const EdgeInsets.all(AppSpace.xs),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15),
+                  boxShadow: const [AppStyle.boxShadowSm],
+                ),
+                child: Image.asset(
+                  h['icon']!,
+                  height: 40,
+                ),
               ),
-              child: Image.asset(
-                h['icon']!,
-                height: 40,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 4),
-              child: Text(h['label']!),
-            )
-          ],
+              Padding(
+                padding: const EdgeInsets.only(top: 4),
+                child: Text(h['label']!),
+              )
+            ],
+          ),
         );
       }).toList(),
     );

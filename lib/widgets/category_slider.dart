@@ -47,7 +47,7 @@ class CategorySlider extends StatelessWidget {
     if (type == 'product') {
       height = width * 1.5;
     } else {
-      height = width * 1.4;
+      height = width * 1.35;
     }
 
     return Column(

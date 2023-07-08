@@ -1,4 +1,5 @@
 import 'package:flora/screens/error.dart';
+import 'package:flora/screens/feature/near_you.dart';
 import 'package:flora/screens/home/index.dart';
 import 'package:flora/screens/login.dart';
 import 'package:flora/screens/onboarding.dart';
@@ -21,6 +22,7 @@ class AppRoute {
   static const String registerSuccess = '/register/success';
   static const String login = '/login';
   static const String promotion = '/promotion';
+  static const String nearYou = '/near-you';
 
   // Routes is not have any agruments
   static Map<String, Widget> simpleRoutes = {
@@ -29,7 +31,8 @@ class AppRoute {
     onBoarding: const OnBoardingScreen(),
     registerPhone: const RegisterPhoneScreen(),
     registerSuccess: const RegisterSuccessScreen(),
-    login: const LoginScreen()
+    login: const LoginScreen(),
+    nearYou: const NearYouScreen(),
   };
 
   static onGenerateRoute(RouteSettings settings) {
@@ -67,7 +70,7 @@ class AppRoute {
     }
 
     if (screen == null) {
-      throw Exception('Unknown route: $routeName');
+      return errorPage();
     }
 
     return MaterialPageRoute<dynamic>(

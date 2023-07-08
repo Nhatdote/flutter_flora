@@ -1,7 +1,9 @@
 import 'package:flora/constans/color.dart';
+import 'package:flora/constans/constan.dart';
 import 'package:flora/constans/space.dart';
 import 'package:flora/constans/style.dart';
 import 'package:flora/db.dart';
+import 'package:flora/widgets/app_header.dart';
 import 'package:flora/widgets/card/product_card.dart';
 import 'package:flutter/material.dart';
 
@@ -21,19 +23,7 @@ class PromotionScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: AppColor.background,
-      appBar: AppBar(
-        title: Text(
-          promotion['title']!,
-          style: const TextStyle(
-            color: AppColor.neutral,
-          ),
-        ),
-        iconTheme: const IconThemeData(
-          color: AppColor.neutral,
-        ),
-        backgroundColor: AppColor.background,
-        elevation: 0,
-      ),
+      appBar: SimpleAppHeader(promotion['title']!),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -77,11 +67,11 @@ class PromotionScreen extends StatelessWidget {
               child: GridView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: AppSpace.md,
                   mainAxisSpacing: AppSpace.md,
-                  childAspectRatio: 0.65,
+                  childAspectRatio: AppConstant.productRatio,
                 ),
                 itemCount: items.length,
                 itemBuilder: (context, index) {
