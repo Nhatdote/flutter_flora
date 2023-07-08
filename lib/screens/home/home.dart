@@ -162,6 +162,7 @@ class FeatureWidghet extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(15),
+                boxShadow: const [AppStyle.boxShadowSm],
               ),
               child: Image.asset(
                 h['icon']!,

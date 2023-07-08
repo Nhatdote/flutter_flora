@@ -16,8 +16,6 @@ class SliverAppHeader extends StatelessWidget {
       delegate: AppPersistentHeaderDelegate(
         minHeight: 110,
         maxHeight: 200,
-        collapsedChild: const CollapsedChild(),
-        expandedChild: const ExpandedHeader(),
       ),
     );
   }
@@ -26,39 +24,20 @@ class SliverAppHeader extends StatelessWidget {
 class AppPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
   final double minHeight;
   final double maxHeight;
-  final Widget expandedChild;
-  final Widget collapsedChild;
 
   AppPersistentHeaderDelegate({
     required this.minHeight,
     required this.maxHeight,
-    required this.expandedChild,
-    required this.collapsedChild,
   });
 
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
-    final isExpanded = shrinkOffset <= 8;
+    final isExpanded = shrinkOffset <= 25;
 
     return SizedBox.expand(
-      child: isExpanded ? expandedChild : collapsedChild,
+      child: ExpandedHeader(isExpanded),
     );
-
-    // return AnimatedCrossFade(
-    //   duration: const Duration(milliseconds: 400),
-    //   crossFadeState:
-    //       isExpanded ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-    //   firstChild: expandedChild,
-    //   secondChild: collapsedChild,
-    // );
-    // return AnimatedOpacity(
-    //   duration: const Duration(milliseconds: 200),
-    //   opacity: isExpanded ? 1.0 : 1.0,
-    //   child: SizedBox.expand(
-    //     child: isExpanded ? expandedChild : collapsedChild,
-    //   ),
-    // );
   }
 
   @override
@@ -70,17 +49,38 @@ class AppPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
   @override
   bool shouldRebuild(covariant AppPersistentHeaderDelegate oldDelegate) {
     return maxHeight != oldDelegate.maxHeight ||
-        minHeight != oldDelegate.minHeight ||
-        collapsedChild != oldDelegate.collapsedChild ||
-        expandedChild != oldDelegate.expandedChild;
+        minHeight != oldDelegate.minHeight;
   }
 }
 
 class ExpandedHeader extends StatelessWidget {
-  const ExpandedHeader({super.key});
+  final bool isExpanded;
+
+  const ExpandedHeader(
+    this.isExpanded, {
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
+    Widget AnimatedText = Padding(
+      padding: const EdgeInsets.only(left: AppSpace.xs),
+      child: AnimatedAlign(
+        alignment: !isExpanded ? Alignment.center : Alignment.topLeft,
+        duration: const Duration(milliseconds: 200),
+        child: AnimatedDefaultTextStyle(
+          style: !isExpanded
+              ? AppStyle.textHeading3.copyWith(color: Colors.white)
+              : const TextStyle(color: Colors.white),
+          duration: const Duration(milliseconds: 200),
+          child: Text(
+            'Hi, Nhatdote!',
+            textAlign: !isExpanded ? TextAlign.center : TextAlign.left,
+          ),
+        ),
+      ),
+    );
+
     return Container(
       decoration: const BoxDecoration(
         color: AppColor.primary,
@@ -97,15 +97,17 @@ class ExpandedHeader extends StatelessWidget {
               width: 120,
             ),
           ),
-          Positioned(
-            left: 0,
-            bottom: 0,
-            right: 0,
-            child: Image.asset(
-              Asset.headerSmoke2,
-              fit: BoxFit.cover,
-            ),
-          ),
+          !isExpanded
+              ? Container()
+              : Positioned(
+                  left: 0,
+                  bottom: 0,
+                  right: 0,
+                  child: Image.asset(
+                    Asset.headerSmoke2,
+                    fit: BoxFit.cover,
+                  ),
+                ),
           Padding(
             padding: const EdgeInsets.only(
               left: AppSpace.xl,
@@ -120,17 +122,7 @@ class ExpandedHeader extends StatelessWidget {
                         padding: const EdgeInsets.all(AppSpace.xs),
                         child: Image.asset(Asset.logo, width: 25),
                       ),
-                      const Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.only(left: AppSpace.xs),
-                          child: Text(
-                            'Hi, Nhatdote!',
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
+                      Expanded(child: AnimatedText),
                       Image.asset(
                         Asset.iconShoppingBasket,
                         color: Colors.white,
@@ -142,25 +134,29 @@ class ExpandedHeader extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: AppSpace.md),
-                  TextField(
-                    decoration: InputDecoration(
-                      prefixIcon: Image.asset(Asset.iconSearch),
-                      hintText: 'Tìm kiếm sản phẩm ở đâu...',
-                      isDense: false,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12.0),
-                        borderSide: const BorderSide(color: AppColor.neutral10),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12.0),
-                        borderSide: const BorderSide(color: AppColor.primary),
-                      ),
-                    ),
-                  ),
+                  SizedBox(height: !isExpanded ? 0 : AppSpace.md),
+                  !isExpanded
+                      ? Container()
+                      : TextField(
+                          decoration: InputDecoration(
+                            prefixIcon: Image.asset(Asset.iconSearch),
+                            hintText: 'Tìm kiếm sản phẩm ở đâu...',
+                            isDense: false,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                              borderSide:
+                                  const BorderSide(color: AppColor.neutral10),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                              borderSide:
+                                  const BorderSide(color: AppColor.primary),
+                            ),
+                          ),
+                        ),
                 ],
               ),
             ),
