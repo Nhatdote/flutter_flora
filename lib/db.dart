@@ -85,7 +85,7 @@ class DB {
       {
         'icon': 'assets/images/etc/feature_design.png',
         'label': 'Thiết kế',
-        'route': '/near-you',
+        'route': '/design/select-shop',
       },
       {
         'icon': 'assets/images/etc/feature_strange.png',
@@ -121,6 +121,7 @@ class DB {
     for (int i = 1; i <= 10; i++) {
       items.add(
         ProductModel(
+          id: i + 1,
           image: 'assets/images/layout/flower_$i.png',
           name: names[random.nextInt(names.length)],
           price: (((random.nextDouble() * 80).round() + 1) * 10000).toDouble(),
@@ -152,6 +153,7 @@ class DB {
       String h = images[i];
       items.add(
         ShopModel(
+          id: i + 1,
           distance:
               '${double.parse((random.nextDouble() * 10).toStringAsFixed(1))}km',
           name: h

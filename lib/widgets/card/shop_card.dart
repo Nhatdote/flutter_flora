@@ -116,6 +116,7 @@ class ShopCard extends StatelessWidget {
 
 class ShopModel {
   ShopModel({
+    required this.id,
     required this.distance,
     required this.name,
     required this.star,
@@ -124,6 +125,7 @@ class ShopModel {
     this.discount,
   });
 
+  final int id;
   final String distance;
   final String name;
   final double star;

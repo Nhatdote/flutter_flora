@@ -62,8 +62,10 @@ class _StrangeScreenState extends State<StrangeScreen>
 
     await Future.delayed(const Duration(seconds: 1));
 
+    items.shuffle(Random());
     setState(() {
       finding = false;
+      items = items;
     });
   }
 

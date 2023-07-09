@@ -48,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
           SliverList.list(
             children: [
               const SizedBox(height: AppSpace.xl),
-              FeatureWidghet(features: features),
+              FeatureWidget(features: features),
               const SizedBox(height: AppSpace.xl),
               CategorySlider(
                 category: 'Deal dành riêng cho Mùng 8/3',
@@ -154,10 +154,10 @@ class _PromotionWidgetState extends State<PromotionWidget> {
   }
 }
 
-class FeatureWidghet extends StatelessWidget {
+class FeatureWidget extends StatelessWidget {
   final List<Map<String, String>> features;
 
-  const FeatureWidghet({
+  const FeatureWidget({
     super.key,
     required this.features,
   });
@@ -167,7 +167,7 @@ class FeatureWidghet extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: features.map((h) {
-        return GestureDetector(
+        return InkWell(
           onTap: () => Navigator.pushNamed(context, h['route']!),
           child: Column(
             children: [

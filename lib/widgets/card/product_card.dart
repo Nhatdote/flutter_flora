@@ -136,14 +136,16 @@ class ProductCard extends StatelessWidget {
 }
 
 class ProductModel {
+  final int id;
   final String image;
   final String name;
   final double price;
   final double star;
   final int sold;
-  final int? discount;
+  int? discount;
 
   ProductModel({
+    required this.id,
     required this.image,
     required this.name,
     required this.price,

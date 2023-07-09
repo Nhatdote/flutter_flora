@@ -1,4 +1,7 @@
 import 'package:flora/screens/error.dart';
+import 'package:flora/screens/feature/design/select_flowers.dart';
+import 'package:flora/screens/feature/design/select_shop.dart';
+import 'package:flora/screens/feature/design/select_wrap.dart';
 import 'package:flora/screens/feature/near_you.dart';
 import 'package:flora/screens/feature/other.dart';
 import 'package:flora/screens/feature/strange.dart';
@@ -15,7 +18,6 @@ import 'package:flutter/material.dart';
 
 class AppRoute {
   static const String index = '/';
-
   static const String splash = '/splash';
   static const String onBoarding = '/onboarding';
   static const String registerPhone = '/register/phone';
@@ -27,6 +29,9 @@ class AppRoute {
   static const String nearYou = '/near-you';
   static const String other = '/other';
   static const String strange = '/strange';
+  static const String designSelectShop = '/design/select-shop';
+  static const String designSelectFlowers = '/design/select-flowers';
+  static const String designSelectWrap = '/design/select-wrap';
 
   // Routes is not have any agruments
   static Map<String, Widget> simpleRoutes = {
@@ -38,8 +43,12 @@ class AppRoute {
     login: const LoginScreen(),
     nearYou: const NearYouScreen(),
     other: const OtherScreen(),
-    strange: const StrangeScreen()
+    strange: const StrangeScreen(),
+    designSelectShop: const DesignSelectShopScreen(),
   };
+
+  // @TODO
+  static Map<String, dynamic> nestedRoutes = {};
 
   static onGenerateRoute(RouteSettings settings) {
     final String? routeName = settings.name;
@@ -69,6 +78,20 @@ class AppRoute {
         }
 
         screen = PromotionScreen(promotion: arguments['promotion']!);
+        break;
+      case AppRoute.designSelectFlowers:
+        if (arguments == null || arguments['shop_id'] == null) {
+          return errorPage();
+        }
+
+        screen = DesignSelectFlowersScreen(arguments['shop_id']);
+        break;
+      case AppRoute.designSelectWrap:
+        if (arguments == null || arguments['ids'] == null) {
+          return errorPage();
+        }
+
+        screen = DesignSelectWrapScreen(arguments['ids']);
         break;
       default:
         screen = routes.containsKey(routeName) ? routes[routeName] : null;
