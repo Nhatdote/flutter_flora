@@ -90,12 +90,12 @@ class DB {
       {
         'icon': 'assets/images/etc/feature_strange.png',
         'label': 'Độc lạ',
-        'route': '/near-you',
+        'route': '/strange',
       },
       {
         'icon': 'assets/images/etc/feature_other.png',
         'label': 'Khác',
-        'route': '/near-you',
+        'route': '/other',
       }
     ];
   }

@@ -107,15 +107,9 @@ class _IndexScreenState extends State<IndexScreen> {
   @override
   Widget build(BuildContext context) {
     Toast.initialize(context);
-    // final Map<String, dynamic> currentScreen = _screens[_currentIndex];
 
     return Scaffold(
       backgroundColor: AppColor.background,
-      // appBar: AppBar(
-      //   title: currentScreen['title'],
-      //   backgroundColor: Colors.transparent,
-      //   elevation: 0,
-      // ),
       body: IndexedStack(
         index: _currentIndex,
         children: _screens.map((h) => h['widget'] as Widget).toList(),

@@ -35,59 +35,64 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        const SliverAppHeader(),
-        const SliverToBoxAdapter(
-          child: PromotionWidget(),
-        ),
-        SliverList.list(
-          children: [
-            const SizedBox(height: AppSpace.xl),
-            FeatureWidghet(features: features),
-            const SizedBox(height: AppSpace.xl),
-            CategorySlider(
-              category: 'Deal dành riêng cho Mùng 8/3',
-              items: deal83,
-              type: 'shop',
-              builder: (item, {double? width}) => AspectRatio(
-                aspectRatio: AppConstant.shopRatio,
-                child: ShopCard(
-                  width: width,
-                  shop: item,
+    return RefreshIndicator(
+      onRefresh: () async {
+        await Future.delayed(const Duration(seconds: 2));
+      },
+      child: CustomScrollView(
+        slivers: [
+          const SliverAppHeader(),
+          const SliverToBoxAdapter(
+            child: PromotionWidget(),
+          ),
+          SliverList.list(
+            children: [
+              const SizedBox(height: AppSpace.xl),
+              FeatureWidghet(features: features),
+              const SizedBox(height: AppSpace.xl),
+              CategorySlider(
+                category: 'Deal dành riêng cho Mùng 8/3',
+                items: deal83,
+                type: 'shop',
+                builder: (item, {double? width}) => AspectRatio(
+                  aspectRatio: AppConstant.shopRatio,
+                  child: ShopCard(
+                    width: width,
+                    shop: item,
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: AppSpace.xl),
-            CategorySlider(
-              category: 'Shop tặng Sinh nhật Người thương',
-              items: birthday,
-              type: 'shop',
-              builder: (item, {double? width}) => AspectRatio(
-                aspectRatio: AppConstant.shopRatio,
-                child: ShopCard(
-                  width: width,
-                  shop: item,
+              const SizedBox(height: AppSpace.xl),
+              CategorySlider(
+                category: 'Shop tặng Sinh nhật Người thương',
+                items: birthday,
+                type: 'shop',
+                builder: (item, {double? width}) => AspectRatio(
+                  aspectRatio: AppConstant.shopRatio,
+                  child: ShopCard(
+                    width: width,
+                    shop: item,
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: AppSpace.xl),
-            CategorySlider(
-              category: 'Sản phẩm thịnh hành',
-              items: flowers,
-              type: 'product',
-              builder: (item, {double? width}) => AspectRatio(
-                aspectRatio: AppConstant.productRatio,
-                child: ProductCard(
-                  width: width,
-                  product: item,
+              const SizedBox(height: AppSpace.xl),
+              CategorySlider(
+                category: 'Sản phẩm thịnh hành',
+                items: flowers,
+                type: 'product',
+                builder: (item, {double? width}) => AspectRatio(
+                  aspectRatio: AppConstant.productRatio,
+                  child: ProductCard(
+                    width: width,
+                    product: item,
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: AppSpace.xl),
-          ],
-        ),
-      ],
+              const SizedBox(height: AppSpace.xl),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

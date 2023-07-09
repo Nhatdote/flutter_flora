@@ -1,9 +1,11 @@
 import 'package:flora/screens/error.dart';
 import 'package:flora/screens/feature/near_you.dart';
+import 'package:flora/screens/feature/other.dart';
+import 'package:flora/screens/feature/strange.dart';
 import 'package:flora/screens/home/index.dart';
 import 'package:flora/screens/login.dart';
 import 'package:flora/screens/onboarding.dart';
-import 'package:flora/screens/promotion.dart';
+import 'package:flora/screens/feature/promotion.dart';
 import 'package:flora/screens/register/form.dart';
 import 'package:flora/screens/register/otp.dart';
 import 'package:flora/screens/register/phone.dart';
@@ -23,6 +25,8 @@ class AppRoute {
   static const String login = '/login';
   static const String promotion = '/promotion';
   static const String nearYou = '/near-you';
+  static const String other = '/other';
+  static const String strange = '/strange';
 
   // Routes is not have any agruments
   static Map<String, Widget> simpleRoutes = {
@@ -33,6 +37,8 @@ class AppRoute {
     registerSuccess: const RegisterSuccessScreen(),
     login: const LoginScreen(),
     nearYou: const NearYouScreen(),
+    other: const OtherScreen(),
+    strange: const StrangeScreen()
   };
 
   static onGenerateRoute(RouteSettings settings) {
