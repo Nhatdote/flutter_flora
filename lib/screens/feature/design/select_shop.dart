@@ -3,23 +3,32 @@ import 'package:flora/constans/color.dart';
 import 'package:flora/constans/space.dart';
 import 'package:flora/constans/style.dart';
 import 'package:flora/db.dart';
+import 'package:flora/getx/design_state.dart';
+import 'package:flora/models/shop_model.dart';
 import 'package:flora/routes.dart';
 import 'package:flora/widgets/app_header.dart';
-import 'package:flora/widgets/card/shop_card.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class DesignSelectShopScreen extends StatefulWidget {
+class DesignSelectShopScreen extends StatelessWidget {
   const DesignSelectShopScreen({super.key});
 
   @override
-  State<DesignSelectShopScreen> createState() => _DesignSelectShopScreenState();
-}
-
-class _DesignSelectShopScreenState extends State<DesignSelectShopScreen> {
-  List<ShopModel> shops = DB.shopList;
-
-  @override
   Widget build(BuildContext context) {
+    final List<ShopModel> shops = DB.shopList;
+    final DesignState state = DesignState();
+
+    Get.put(state);
+
+    void onTap(shop) async {
+      if (state.shop.value == null || state.shop.value!.id != shop.id) {
+        state.reset();
+        state.shop.value = shop;
+      }
+
+      Navigator.pushNamed(context, AppRoute.designSelectFlowers);
+    }
+
     return Scaffold(
       backgroundColor: AppColor.background,
       appBar: const SimpleAppHeader('Thiết kế'),
@@ -41,14 +50,9 @@ class _DesignSelectShopScreenState extends State<DesignSelectShopScreen> {
                   final ShopModel shop = shops[index];
 
                   return InkWell(
-                    onTap: () => Navigator.pushNamed(
-                      context,
-                      AppRoute.designSelectFlowers,
-                      arguments: {'shop_id': shop.id},
-                    ),
+                    onTap: () => onTap(shop),
                     splashColor: Colors.black38,
                     borderRadius: BorderRadius.circular(15),
-                    // radius: 1000,
                     child: Ink(
                       decoration: BoxDecoration(
                         boxShadow: const [AppStyle.boxShadowSm],

@@ -1,9 +1,11 @@
 import 'dart:math';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flora/constans/constan.dart';
+import 'package:flora/constans/constant.dart';
 import 'package:flora/constans/space.dart';
 import 'package:flora/constans/style.dart';
 import 'package:flora/db.dart';
+import 'package:flora/models/product_model.dart';
+import 'package:flora/models/shop_model.dart';
 import 'package:flora/routes.dart';
 import 'package:flora/widgets/app_header.dart';
 import 'package:flora/widgets/card/product_card.dart';

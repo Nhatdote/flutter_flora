@@ -1,10 +1,11 @@
 import 'dart:math';
 
 import 'package:flora/constans/color.dart';
-import 'package:flora/constans/constan.dart';
+import 'package:flora/constans/constant.dart';
 import 'package:flora/constans/space.dart';
 import 'package:flora/constans/style.dart';
 import 'package:flora/db.dart';
+import 'package:flora/models/product_model.dart';
 import 'package:flora/widgets/app_header.dart';
 import 'package:flora/widgets/card/product_card.dart';
 import 'package:flutter/material.dart';

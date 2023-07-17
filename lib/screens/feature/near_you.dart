@@ -1,6 +1,7 @@
 import 'package:flora/constans/color.dart';
-import 'package:flora/constans/constan.dart';
+import 'package:flora/constans/constant.dart';
 import 'package:flora/db.dart';
+import 'package:flora/models/shop_model.dart';
 import 'package:flora/widgets/app_header.dart';
 import 'package:flora/widgets/card/shop_card.dart';
 import 'package:flutter/material.dart';

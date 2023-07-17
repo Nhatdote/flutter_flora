@@ -1,6 +1,7 @@
 import 'package:flora/constans/asset.dart';
 import 'package:flora/constans/color.dart';
 import 'package:flora/constans/style.dart';
+import 'package:flora/models/product_model.dart';
 import 'package:flora/shared/functions.dart';
 import 'package:flutter/material.dart';
 import '../discount_flag.dart';
@@ -133,24 +134,4 @@ class ProductCard extends StatelessWidget {
       ],
     );
   }
-}
-
-class ProductModel {
-  final int id;
-  final String image;
-  final String name;
-  final double price;
-  final double star;
-  final int sold;
-  int? discount;
-
-  ProductModel({
-    required this.id,
-    required this.image,
-    required this.name,
-    required this.price,
-    required this.star,
-    required this.sold,
-    this.discount,
-  });
 }

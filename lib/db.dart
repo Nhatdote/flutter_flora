@@ -1,8 +1,10 @@
 import 'dart:math';
 import 'package:flora/constans/asset.dart';
 import 'package:flora/constans/language.dart';
-import 'package:flora/widgets/card/product_card.dart';
-import 'package:flora/widgets/card/shop_card.dart';
+import 'package:flora/models/arrangement_model.dart';
+import 'package:flora/models/product_model.dart';
+import 'package:flora/models/shop_model.dart';
+import 'package:flora/models/wrap_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DB {
@@ -100,7 +102,16 @@ class DB {
     ];
   }
 
-  static List<ProductModel> getFlowers() {
+  static List<ProductModel> getFlowerByIds(List<int> ids) {
+    List<ProductModel> items = getFlowers();
+
+    List<ProductModel> filtered =
+        items.where((h) => ids.contains(h.id)).toList();
+
+    return filtered;
+  }
+
+  static List<ProductModel> getFlowers({bool shuffle = true}) {
     final List<String> names = [
       'Hoa hồng bó ruy băng',
       'Hoa mẫu đơn bó giấy',
@@ -123,8 +134,9 @@ class DB {
         ProductModel(
           id: i + 1,
           image: 'assets/images/layout/flower_$i.png',
-          name: names[random.nextInt(names.length)],
-          price: (((random.nextDouble() * 80).round() + 1) * 10000).toDouble(),
+          name: names[i], //names[random.nextInt(names.length)],
+          price: (((random.nextDouble() * 80).round() + 1) * 10000.toDouble())
+              .toDouble(),
           star: double.parse((random.nextDouble() * 1 + 4).toStringAsFixed(1)),
           sold: random.nextInt(1000) + 50,
           discount: i % 2 == 0 ? null : random.nextInt(32),
@@ -132,7 +144,9 @@ class DB {
       );
     }
 
-    items.shuffle(random);
+    if (shuffle) {
+      items.shuffle(random);
+    }
 
     return items;
   }
@@ -173,5 +187,63 @@ class DB {
     }
 
     return items;
+  }
+
+  static List<WrapModel> get wraps {
+    return [
+      WrapModel(
+        id: 1,
+        title: 'Giấy Kraft',
+        price: 10000.toDouble(),
+        image: 'assets/images/layout/wrap/kraft.png',
+      ),
+      WrapModel(
+        id: 2,
+        title: 'Giấy Mếch',
+        price: 10000.toDouble(),
+        image: 'assets/images/layout/wrap/mech.png',
+      ),
+      WrapModel(
+        id: 3,
+        title: 'Giấy Kraft 2',
+        price: 10000.toDouble(),
+        image: 'assets/images/layout/wrap/kraft.png',
+      ),
+      WrapModel(
+        id: 4,
+        title: 'Giấy Mếch 2',
+        price: 10000.toDouble(),
+        image: 'assets/images/layout/wrap/mech.png',
+      ),
+    ];
+  }
+
+  static List<ArrangementModel> get arrangements {
+    return [
+      ArrangementModel(
+        id: 1,
+        title: 'Bó tròn',
+        price: 0.toDouble(),
+        image: 'assets/images/layout/arrangement/rounded.png',
+      ),
+      ArrangementModel(
+        id: 2,
+        title: 'Bán Nguyệt',
+        price: 0.toDouble(),
+        image: 'assets/images/layout/arrangement/semicircle.png',
+      ),
+      ArrangementModel(
+        id: 3,
+        title: 'Bó tròn 2',
+        price: 0.toDouble(),
+        image: 'assets/images/layout/arrangement/rounded.png',
+      ),
+      ArrangementModel(
+        id: 4,
+        title: 'Bán Nguyệt 2',
+        price: 0.toDouble(),
+        image: 'assets/images/layout/arrangement/semicircle.png',
+      ),
+    ];
   }
 }

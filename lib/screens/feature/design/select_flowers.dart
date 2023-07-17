@@ -1,21 +1,19 @@
 import 'package:flora/constans/color.dart';
-import 'package:flora/constans/constan.dart';
+import 'package:flora/constans/constant.dart';
 import 'package:flora/constans/space.dart';
 import 'package:flora/constans/style.dart';
 import 'package:flora/db.dart';
+import 'package:flora/getx/design_state.dart';
+import 'package:flora/models/product_model.dart';
 import 'package:flora/routes.dart';
 import 'package:flora/widgets/app_header.dart';
 import 'package:flora/widgets/button.dart';
 import 'package:flora/widgets/card/product_card.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class DesignSelectFlowersScreen extends StatefulWidget {
-  final int shopId;
-
-  const DesignSelectFlowersScreen(
-    this.shopId, {
-    super.key,
-  });
+  const DesignSelectFlowersScreen({super.key});
 
   @override
   State<DesignSelectFlowersScreen> createState() =>
@@ -23,29 +21,19 @@ class DesignSelectFlowersScreen extends StatefulWidget {
 }
 
 class _DesignSelectFlowersScreenState extends State<DesignSelectFlowersScreen> {
-  bool btnDisalbed = true;
-  List<ProductModel> items = [];
-  Set<int> selectedIds = {};
+  final DesignState state = Get.find<DesignState>();
+  final List<ProductModel> items = DB.getFlowers(shuffle: false);
+  late Set<int> selectedIds = {};
+  late bool btnDisabled = true;
 
   @override
   void initState() {
     super.initState();
-    setState(() {
-      items = DB.getFlowers().map((h) {
-        return ProductModel(
-          id: h.id,
-          image: h.image,
-          name: h.name,
-          price: h.price,
-          star: h.star,
-          sold: h.sold,
-          discount: null,
-        );
-      }).toList();
-    });
+    selectedIds = state.flowerIds.keys.map((e) => e as int).toSet();
+    btnDisabled = state.flowerIds.isEmpty;
   }
 
-  onSelected(int id) {
+  void onSelected(id) {
     if (selectedIds.contains(id)) {
       selectedIds.remove(id);
     } else {
@@ -54,8 +42,14 @@ class _DesignSelectFlowersScreenState extends State<DesignSelectFlowersScreen> {
 
     setState(() {
       selectedIds = selectedIds;
-      btnDisalbed = selectedIds.isEmpty;
+      btnDisabled = selectedIds.isEmpty;
     });
+
+    if (state.flowerIds.containsKey(id)) {
+      state.flowerIds.remove(id);
+    } else {
+      state.flowerIds[id] = 1;
+    }
   }
 
   @override
@@ -66,15 +60,21 @@ class _DesignSelectFlowersScreenState extends State<DesignSelectFlowersScreen> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
-            padding: EdgeInsets.only(
+          Padding(
+            padding: const EdgeInsets.only(
               left: AppSpace.xl,
               right: AppSpace.xl,
               bottom: AppSpace.xl,
             ),
-            child: Text(
-              'Chọn hoa mà bạn muốn thiết kế',
-              style: TextStyle(fontWeight: FontWeight.w600),
+            child: Row(
+              children: [
+                Text(state.shop.value!.name),
+                const Padding(
+                  padding: EdgeInsets.only(left: 4, right: 4, top: 1),
+                  child: Icon(Icons.chevron_right_rounded),
+                ),
+                const Text('Chọn hoa')
+              ],
             ),
           ),
           Expanded(
@@ -112,15 +112,14 @@ class _DesignSelectFlowersScreenState extends State<DesignSelectFlowersScreen> {
                           child: IgnorePointer(
                             ignoring: true,
                             child: Checkbox(
-                              fillColor:
-                                  MaterialStateColor.resolveWith((states) {
+                              fillColor: MaterialStateColor.resolveWith((_) {
                                 return AppColor.primary;
                               }),
                               value: isChecked,
                               onChanged: null,
                             ),
                           ),
-                        )
+                        ),
                       ],
                     ),
                   );
@@ -142,18 +141,15 @@ class _DesignSelectFlowersScreenState extends State<DesignSelectFlowersScreen> {
             ),
             child: AppButton(
               label: 'Tiếp tục',
-              disable: btnDisalbed,
+              disable: btnDisabled,
               onTab: () {
                 Navigator.pushNamed(
                   context,
                   AppRoute.designSelectWrap,
-                  arguments: {
-                    'ids': selectedIds.toList(),
-                  },
                 );
               },
             ),
-          )
+          ),
         ],
       ),
     );

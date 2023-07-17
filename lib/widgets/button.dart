@@ -1,4 +1,5 @@
 import 'package:flora/constans/color.dart';
+import 'package:flora/constans/constant.dart';
 import 'package:flutter/material.dart';
 
 class AppButton extends StatelessWidget {
@@ -29,7 +30,7 @@ class AppButton extends StatelessWidget {
           child: Container(
             alignment: Alignment.center,
             width: double.infinity,
-            height: 50,
+            height: AppConstant.btnHeight,
             child: loading
                 ? const SizedBox(
                     width: 22,

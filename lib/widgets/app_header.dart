@@ -77,7 +77,7 @@ class ExpandedHeader extends StatelessWidget {
             child: Image.asset(
               Asset.headerSmoke1,
               fit: BoxFit.cover,
-              width: 120,
+              width: 100,
             ),
           ),
           !isExpanded
@@ -100,6 +100,7 @@ class ExpandedHeader extends StatelessWidget {
               child: Column(
                 children: [
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(AppSpace.xs),
@@ -155,12 +156,14 @@ class SliverAppHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double paddingTop = MediaQuery.of(context).padding.top;
+
     return SliverPersistentHeader(
       pinned: true,
       floating: true,
       delegate: AppPersistentHeaderDelegate(
-        minHeight: 110,
-        maxHeight: 200,
+        minHeight: paddingTop + 42, // 110
+        maxHeight: paddingTop + 130,
       ),
     );
   }

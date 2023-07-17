@@ -1,4 +1,5 @@
 import 'package:flora/screens/error.dart';
+import 'package:flora/screens/feature/design/cart.dart';
 import 'package:flora/screens/feature/design/select_flowers.dart';
 import 'package:flora/screens/feature/design/select_shop.dart';
 import 'package:flora/screens/feature/design/select_wrap.dart';
@@ -32,6 +33,7 @@ class AppRoute {
   static const String designSelectShop = '/design/select-shop';
   static const String designSelectFlowers = '/design/select-flowers';
   static const String designSelectWrap = '/design/select-wrap';
+  static const String designCart = '/design/cart';
 
   // Routes is not have any agruments
   static Map<String, Widget> simpleRoutes = {
@@ -45,6 +47,9 @@ class AppRoute {
     other: const OtherScreen(),
     strange: const StrangeScreen(),
     designSelectShop: const DesignSelectShopScreen(),
+    designSelectFlowers: const DesignSelectFlowersScreen(),
+    designSelectWrap: const DesignSelectWrapScreen(),
+    designCart: const DesignCartScreen()
   };
 
   // @TODO
@@ -79,20 +84,13 @@ class AppRoute {
 
         screen = PromotionScreen(promotion: arguments['promotion']!);
         break;
-      case AppRoute.designSelectFlowers:
-        if (arguments == null || arguments['shop_id'] == null) {
-          return errorPage();
-        }
+      // case AppRoute.designCart:
+      //   final DesignState state = Get.find();
 
-        screen = DesignSelectFlowersScreen(arguments['shop_id']);
-        break;
-      case AppRoute.designSelectWrap:
-        if (arguments == null || arguments['ids'] == null) {
-          return errorPage();
-        }
+      //   print('${state.wrap}, ${state.arrangement}');
 
-        screen = DesignSelectWrapScreen(arguments['ids']);
-        break;
+      //   screen = const DesignCartScreen();
+      //   break;
       default:
         screen = routes.containsKey(routeName) ? routes[routeName] : null;
         break;

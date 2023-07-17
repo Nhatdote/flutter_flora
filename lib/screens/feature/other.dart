@@ -1,11 +1,11 @@
 import 'dart:math';
-
 import 'package:flora/constans/color.dart';
 import 'package:flora/db.dart';
+import 'package:flora/models/product_model.dart';
 import 'package:flora/widgets/app_header.dart';
 import 'package:flora/widgets/card/product_card.dart';
 import 'package:flutter/material.dart';
-import '../../constans/constan.dart';
+import '../../constans/constant.dart';
 import '../../constans/space.dart';
 import '../../constans/style.dart';
 
@@ -33,9 +33,10 @@ class _OtherScreenState extends State<OtherScreen> {
   Future<void> _onLoadmore() async {
     await Future.delayed(const Duration(seconds: 1));
 
-    setState(() {
-      items = items + DB.getFlowers();
-      isLoading = false;
+    setState(() => items = items + DB.getFlowers());
+
+    Future.delayed(const Duration(seconds: 1), () {
+      setState(() => isLoading = false);
     });
   }
 
