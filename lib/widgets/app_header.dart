@@ -1,3 +1,4 @@
+import 'package:flora/widgets/input/search.dart';
 import 'package:flutter/material.dart';
 import '../constans/asset.dart';
 import '../constans/color.dart';
@@ -121,25 +122,8 @@ class ExpandedHeader extends StatelessWidget {
                   SizedBox(height: !isExpanded ? 0 : AppSpace.md),
                   !isExpanded
                       ? Container()
-                      : TextField(
-                          decoration: InputDecoration(
-                            prefixIcon: Image.asset(Asset.iconSearch),
-                            hintText: 'Tìm kiếm sản phẩm ở đâu...',
-                            isDense: false,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12.0),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12.0),
-                              borderSide:
-                                  const BorderSide(color: AppColor.neutral10),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12.0),
-                              borderSide:
-                                  const BorderSide(color: AppColor.primary),
-                            ),
-                          ),
+                      : const AppInputSearch(
+                          placeholder: 'Tìm kiếm sản phẩm ở đây...',
                         ),
                 ],
               ),

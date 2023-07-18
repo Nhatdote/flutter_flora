@@ -8,7 +8,7 @@ class Toast {
   static ScaffoldMessengerState? _scaffoldMessenger;
 
   static void initialize(BuildContext context) {
-    _scaffoldMessenger = ScaffoldMessenger.of(context);
+    _scaffoldMessenger ??= ScaffoldMessenger.of(context);
   }
 
   static void showError(dynamic message) {

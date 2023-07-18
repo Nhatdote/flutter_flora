@@ -35,9 +35,16 @@ class AppStyle {
     fontWeight: FontWeight.w600,
   );
 
-  static const BoxShadow boxShadowSm = BoxShadow(
+  static const BoxShadow boxShadow = BoxShadow(
     color: Colors.black12,
     offset: Offset(1, 1),
     blurRadius: 5,
+  );
+
+  static const BoxShadow boxShadowSm = BoxShadow(
+    color: Color.fromRGBO(0, 0, 0, 0.04),
+    offset: Offset(1, 1),
+    blurRadius: 9,
+    spreadRadius: 0,
   );
 }

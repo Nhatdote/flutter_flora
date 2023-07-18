@@ -10,7 +10,7 @@ import 'package:flora/shared/functions.dart';
 import 'package:flora/widgets/app_header.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../widgets/button.dart';
+import '../../../widgets/button/app_button.dart';
 
 class DesignSelectWrapScreen extends StatefulWidget {
   const DesignSelectWrapScreen({super.key});

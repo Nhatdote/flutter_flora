@@ -30,4 +30,6 @@ class Asset {
   static const String iconComments = 'assets/images/icons/comments.png';
   static const String iconStar = 'assets/images/icons/star.png';
   static const String iconStarSolid = 'assets/images/icons/star_solid.png';
+  static const String iconBell = 'assets/images/icons/bell.png';
+  static const String iconBellSolid = 'assets/images/icons/bell_solid.png';
 }

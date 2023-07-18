@@ -90,17 +90,13 @@ class _IndexScreenState extends State<IndexScreen> {
     super.dispose();
   }
 
-  void _logError(String code, String? message) {
-    // ignore: avoid_print
-    print('Error: $code${message == null ? '' : '\nError Message: $message'}');
-  }
-
   Future<void> requestCamera() async {
     try {
       WidgetsFlutterBinding.ensureInitialized();
       _cameras = await availableCameras();
     } on CameraException catch (e) {
-      _logError(e.code, e.description);
+      print(
+          'Error: $e.code${e.description == null ? '' : '\nError Message: $e.description'}');
     }
   }
 

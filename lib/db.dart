@@ -4,6 +4,7 @@ import 'package:flora/constans/language.dart';
 import 'package:flora/models/arrangement_model.dart';
 import 'package:flora/models/product_model.dart';
 import 'package:flora/models/shop_model.dart';
+import 'package:flora/models/voucher_model.dart';
 import 'package:flora/models/wrap_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -244,6 +245,65 @@ class DB {
         price: 0.toDouble(),
         image: 'assets/images/layout/arrangement/semicircle.png',
       ),
+    ];
+  }
+
+  static List<VoucherModel> vouchers({String from = fromFlora}) {
+    final String imagePath = from == fromFlora ? 'voucher_' : 'shop_';
+
+    return [
+      VoucherModel(
+        id: 1,
+        image: 'assets/images/layout/voucher/${imagePath}1.png',
+        type: typeFreeShip,
+        title: 'Giảm 10%',
+        desc: 'Tối đa 30k',
+        total: 100,
+        used: 25,
+        from: from,
+        canSaveVoucher: true,
+        hasUsedVoucher: false,
+        expiredAt: DateTime(2023, 12),
+      ),
+      VoucherModel(
+        id: 2,
+        image: 'assets/images/layout/voucher/${imagePath}2.png',
+        type: typeFreeShip,
+        title: 'Giảm 10%',
+        desc: 'Tối đa 30k',
+        total: 100,
+        used: 60,
+        from: from,
+        canSaveVoucher: false,
+        hasSavedVoucher: true,
+        hasUsedVoucher: false,
+      ),
+      VoucherModel(
+        id: 3,
+        image: 'assets/images/layout/voucher/${imagePath}2.png',
+        type: typeFreeShip,
+        title: 'Giảm 12%',
+        desc: 'Tối đa 30k',
+        total: 100,
+        used: 88,
+        from: from,
+        canSaveVoucher: true,
+        hasSavedVoucher: false,
+        hasUsedVoucher: false,
+      ),
+      VoucherModel(
+        id: 4,
+        image: 'assets/images/layout/voucher/${imagePath}1.png',
+        type: typeFreeShip,
+        title: 'Giảm 20%',
+        desc: 'Tối đa 50k',
+        total: 100,
+        used: 100,
+        from: from,
+        canSaveVoucher: false,
+        hasSavedVoucher: true,
+        hasUsedVoucher: false,
+      )
     ];
   }
 }

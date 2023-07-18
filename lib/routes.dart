@@ -15,6 +15,8 @@ import 'package:flora/screens/register/otp.dart';
 import 'package:flora/screens/register/phone.dart';
 import 'package:flora/screens/register/success.dart';
 import 'package:flora/screens/splash.dart';
+import 'package:flora/screens/voucher/voucher_flora.dart';
+import 'package:flora/screens/voucher/voucher_shop.dart';
 import 'package:flutter/material.dart';
 
 class AppRoute {
@@ -34,6 +36,8 @@ class AppRoute {
   static const String designSelectFlowers = '/design/select-flowers';
   static const String designSelectWrap = '/design/select-wrap';
   static const String designCart = '/design/cart';
+  static const String voucherShop = '/voucher/shop';
+  static const String voucherFlora = '/voucher/flora';
 
   // Routes is not have any agruments
   static Map<String, Widget> simpleRoutes = {
@@ -49,7 +53,9 @@ class AppRoute {
     designSelectShop: const DesignSelectShopScreen(),
     designSelectFlowers: const DesignSelectFlowersScreen(),
     designSelectWrap: const DesignSelectWrapScreen(),
-    designCart: const DesignCartScreen()
+    designCart: const DesignCartScreen(),
+    voucherShop: const VoucherShopScreen(),
+    voucherFlora: const VoucherFloraScreen(),
   };
 
   // @TODO
