@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 class AppButton extends StatelessWidget {
   final String label;
-  final VoidCallback? onTab;
+  final VoidCallback? onTap;
   final bool disable;
   final bool loading;
   final String size;
@@ -15,7 +15,7 @@ class AppButton extends StatelessWidget {
   const AppButton({
     super.key,
     required this.label,
-    this.onTab,
+    this.onTap,
     this.disable = false,
     this.loading = false,
     this.size = 'large',
@@ -76,7 +76,7 @@ class AppButton extends StatelessWidget {
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        onTap: (disable || loading) ? null : onTab,
+        onTap: (disable || loading) ? null : onTap,
         child: Ink(
           decoration: decoration,
           child: Container(

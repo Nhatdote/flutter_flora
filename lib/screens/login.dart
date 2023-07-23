@@ -194,7 +194,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             AppButton(
                               label: 'Đăng nhập',
-                              onTab: () => onLogin(context),
+                              onTap: () => onLogin(context),
                               loading: btnLoading,
                               disable: btnDisabled,
                             )

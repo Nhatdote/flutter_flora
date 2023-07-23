@@ -145,7 +145,7 @@ class _RegisterPhoneScreenState extends State<RegisterPhoneScreen> {
                           AppButton(
                             loading: loading,
                             label: 'Tiếp tục',
-                            onTab: () => onNext(context),
+                            onTap: () => onNext(context),
                             disable: nextDisabled,
                           )
                         ],

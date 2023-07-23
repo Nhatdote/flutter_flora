@@ -4,6 +4,7 @@ import 'package:flora/constans/space.dart';
 import 'package:flora/constans/style.dart';
 import 'package:flora/models/voucher_model.dart';
 import 'package:flora/widgets/voucher/voucher_btn.dart';
+import 'package:flora/widgets/voucher/voucher_condition_text.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -83,13 +84,7 @@ class VoucherList extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              const Text(
-                'Điều kiện',
-                style: TextStyle(
-                  fontSize: AppStyle.fontSizeSm,
-                  color: AppColor.primary,
-                ),
-              ),
+              VoucherConditionText(voucher),
             ],
           ),
         ],

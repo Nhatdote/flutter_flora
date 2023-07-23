@@ -127,7 +127,7 @@ class _RegisterOtpScreenState extends State<RegisterOtpScreen> {
               disable: btnDisabled,
               loading: btnLoading,
               label: 'Tiếp tục',
-              onTab: () => onNext(context),
+              onTap: () => onNext(context),
             )
           ],
         ),

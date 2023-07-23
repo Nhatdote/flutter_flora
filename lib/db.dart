@@ -250,6 +250,8 @@ class DB {
 
   static List<VoucherModel> vouchers({String from = fromFlora}) {
     final String imagePath = from == fromFlora ? 'voucher_' : 'shop_';
+    const String content =
+        'Giảm 10% (tối đa 30k) cho mọi đơn hàng thoả mãn điều kiện ưu đãi khi mua hàng trên Flora. \n Số lượt sử dụng có hạn, chương trình và mã có thể kết thúc khi hết lượt ưu đãi hoặc khi hết hạn ưu đãi.';
 
     return [
       VoucherModel(
@@ -264,6 +266,7 @@ class DB {
         canSaveVoucher: true,
         hasUsedVoucher: false,
         expiredAt: DateTime(2023, 12),
+        content: content,
       ),
       VoucherModel(
         id: 2,
@@ -277,6 +280,7 @@ class DB {
         canSaveVoucher: false,
         hasSavedVoucher: true,
         hasUsedVoucher: false,
+        content: content,
       ),
       VoucherModel(
         id: 3,
@@ -290,6 +294,7 @@ class DB {
         canSaveVoucher: true,
         hasSavedVoucher: false,
         hasUsedVoucher: false,
+        content: content,
       ),
       VoucherModel(
         id: 4,
@@ -303,6 +308,7 @@ class DB {
         canSaveVoucher: false,
         hasSavedVoucher: true,
         hasUsedVoucher: false,
+        content: content,
       )
     ];
   }

@@ -173,7 +173,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                             },
                           ),
                         ),
-                        AppButton(label: 'Tiếp tục', onTab: () => onNext())
+                        AppButton(label: 'Tiếp tục', onTap: () => onNext())
                       ],
                     ),
                   ),

@@ -223,7 +223,7 @@ class _DesignCartScreenState extends State<DesignCartScreen> {
                       child: AppButton(
                         label: 'Thanh toán',
                         disable: false,
-                        onTab: () {
+                        onTap: () {
                           // Navigator.pushNamed(
                           //   context,
                           //   AppRoute.designSelectWrap,

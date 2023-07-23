@@ -23,6 +23,7 @@ class VoucherModel {
     this.expiredAt,
     this.minPrice,
     required this.from,
+    this.payMethod = methodAll,
   });
 
   final int id;
@@ -40,4 +41,15 @@ class VoucherModel {
   final DateTime? expiredAt;
   final double? minPrice;
   final String from;
+  final String payMethod;
+
+  static String payMethodLabel(id) {
+    Map<String, String> map = {
+      methodAll: 'Mọi hình thức',
+      methodCash: 'Tiền mặt',
+      methodOnline: 'Online'
+    };
+
+    return map[id] ?? methodAll;
+  }
 }

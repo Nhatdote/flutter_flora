@@ -142,7 +142,7 @@ class _DesignSelectFlowersScreenState extends State<DesignSelectFlowersScreen> {
             child: AppButton(
               label: 'Tiếp tục',
               disable: btnDisabled,
-              onTab: () {
+              onTap: () {
                 Navigator.pushNamed(
                   context,
                   AppRoute.designSelectWrap,

@@ -364,7 +364,7 @@ class _RegisterFormScreenState extends State<RegisterFormScreen> {
                   ),
                   AppButton(
                     label: 'Đăng ký',
-                    onTab: () => _submitForm(context),
+                    onTap: () => _submitForm(context),
                     disable: btnDisabled,
                     loading: btnLoading,
                   ),

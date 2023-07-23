@@ -82,7 +82,7 @@ class StartWidget extends StatelessWidget {
             const Spacer(),
             AppButton(
               label: 'Bắt đầu',
-              onTab: () => Navigator.pushNamedAndRemoveUntil(
+              onTap: () => Navigator.pushNamedAndRemoveUntil(
                 context,
                 AppRoute.login,
                 (route) => false,

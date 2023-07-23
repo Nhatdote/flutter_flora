@@ -4,7 +4,19 @@ import 'package:flora/constans/space.dart';
 import 'package:flora/constans/style.dart';
 import 'package:flora/models/voucher_model.dart';
 import 'package:flora/widgets/voucher/voucher_btn.dart';
+import 'package:flora/widgets/voucher/voucher_condition_popup.dart';
+import 'package:flora/widgets/voucher/voucher_condition_text.dart';
 import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+
+class MyWidget extends StatelessWidget {
+  const MyWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
+}
 
 class VoucherGrid extends StatelessWidget {
   const VoucherGrid(this.voucher, {super.key});
@@ -40,13 +52,7 @@ class VoucherGrid extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              const Text(
-                'Điều kiện',
-                style: TextStyle(
-                  fontSize: 10,
-                  color: AppColor.primary,
-                ),
-              )
+              VoucherConditionText(voucher)
             ],
           ),
           const SizedBox(width: AppSpace.sm),

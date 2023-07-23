@@ -116,7 +116,7 @@ class _DesignSelectWrapScreenState extends State<DesignSelectWrapScreen> {
             child: AppButton(
               label: 'Tiếp tục',
               disable: btnDisalbed,
-              onTab: () {
+              onTap: () {
                 Navigator.pushNamed(
                   context,
                   AppRoute.designCart,

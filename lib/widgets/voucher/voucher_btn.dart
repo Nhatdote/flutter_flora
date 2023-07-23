@@ -34,7 +34,7 @@ class VoucherBtn extends StatelessWidget {
     return AppButton(
       label: label,
       size: size,
-      onTab: onTap,
+      onTap: onTap,
       disable: onTap == null,
       type: type,
     );
