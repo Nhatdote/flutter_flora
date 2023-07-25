@@ -4,6 +4,7 @@ import 'package:flora/constans/language.dart';
 import 'package:flora/models/arrangement_model.dart';
 import 'package:flora/models/product_model.dart';
 import 'package:flora/models/shop_model.dart';
+import 'package:flora/models/voucher_history_model.dart';
 import 'package:flora/models/voucher_model.dart';
 import 'package:flora/models/wrap_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,6 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class DB {
   static const skipOnBoarding = 'skipOnBoarding';
   static const users = 'users';
+  static const keyLoginUser = 'loginUser';
 
   static SharedPreferences? _prefs;
 
@@ -310,6 +312,51 @@ class DB {
         hasUsedVoucher: false,
         content: content,
       )
+    ];
+  }
+
+  static List<VoucherHistoryModel> get voucherHistories {
+    return [
+      VoucherHistoryModel(
+        productId: 1,
+        productName: 'Hoa Hồng Canada 1',
+        productImage: 'assets/images/layout/flower_1.png',
+        date: DateTime(2023, 08, 03, 15, 05, 00),
+        type: VoucherHistoryType.voucherHistoryOut,
+        amount: 3000,
+      ),
+      VoucherHistoryModel(
+        productId: 2,
+        productName: 'Hoa Hồng Canada 2',
+        productImage: 'assets/images/layout/flower_2.png',
+        date: DateTime(2023, 08, 03, 15, 05, 00),
+        type: VoucherHistoryType.voucherHistoryOut,
+        amount: 5000,
+      ),
+      VoucherHistoryModel(
+        productId: 3,
+        productName: 'Hoa Hồng Canada 3',
+        productImage: 'assets/images/layout/flower_3.png',
+        date: DateTime(2023, 08, 03, 15, 05, 00),
+        type: VoucherHistoryType.voucherHistoryOut,
+        amount: 1000,
+      ),
+      VoucherHistoryModel(
+        productId: 4,
+        productName: 'Hoa Hồng Canada 4',
+        productImage: 'assets/images/layout/flower_4.png',
+        date: DateTime(2023, 08, 03, 15, 05, 00),
+        type: VoucherHistoryType.voucherHistoryIn,
+        amount: 1000,
+      ),
+      VoucherHistoryModel(
+        productId: 5,
+        productName: 'Hoa Hồng Canada 5',
+        productImage: 'assets/images/layout/flower_5.png',
+        date: DateTime(2023, 08, 03, 15, 05, 00),
+        type: VoucherHistoryType.voucherHistoryIn,
+        amount: 1500,
+      ),
     ];
   }
 }

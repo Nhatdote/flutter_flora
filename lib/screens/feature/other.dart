@@ -20,6 +20,7 @@ class _OtherScreenState extends State<OtherScreen> {
   List<ProductModel> items = [];
   final ScrollController _controller = ScrollController();
   bool isLoading = false;
+  bool canLoadMore = true;
 
   Future<void> _onRefresh() async {
     await Future.delayed(const Duration(seconds: 1));
@@ -128,7 +129,7 @@ class _OtherScreenState extends State<OtherScreen> {
               ),
               Center(
                 child: Opacity(
-                  opacity: isLoading ? 0 : 1,
+                  opacity: canLoadMore ? 1 : 0,
                   child: Container(
                     width: double.infinity,
                     height: 100,

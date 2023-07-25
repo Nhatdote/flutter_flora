@@ -5,6 +5,7 @@ import 'package:flora/db.dart';
 import 'package:flora/models/product_model.dart';
 import 'package:flora/models/voucher_model.dart';
 import 'package:flora/routes.dart';
+import 'package:flora/screens/voucher/accumulate.dart';
 import 'package:flora/shared/toast.dart';
 import 'package:flora/widgets/button/icon_button.dart';
 import 'package:flora/widgets/card/product_card.dart';
@@ -72,7 +73,12 @@ class _EndowScreenState extends State<EndowScreen> {
                       AppIconButton(
                         Image.asset(Asset.iconStar),
                         onTap: () {
-                          Toast.show('OK!');
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const AccumulateScreen(),
+                            ),
+                          );
                         },
                       ),
                       const SizedBox(width: 4),

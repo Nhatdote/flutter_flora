@@ -1,6 +1,7 @@
 import 'package:flora/constans/color.dart';
 import 'package:flora/constans/space.dart';
 import 'package:flora/constans/style.dart';
+import 'package:flora/getx/auth_state.dart';
 import 'package:flora/models/user.dart';
 import 'package:flora/routes.dart';
 import 'package:flora/shared/toast.dart';
@@ -9,6 +10,7 @@ import 'package:flora/widgets/logo.dart';
 import 'package:flora/widgets/webview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+import 'package:get/get.dart';
 
 import '../constans/asset.dart';
 
@@ -28,6 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool showPassword = false;
   String? errorTextPhone;
   String? errorTextPassword;
+  final AuthState auth = Get.find();
 
   onLogin(thisContext) async {
     String phone = phoneController.text;
@@ -43,13 +46,14 @@ class _LoginScreenState extends State<LoginScreen> {
       btnLoading = false;
     });
 
-    final bool check = User.verify(phone, password);
+    final User? check = User.verify(phone, password);
 
-    if (!check) {
+    if (check == null) {
       Toast.showError('Số điện thoại hoặc mật khẩu không đúng!');
       return;
     }
 
+    auth.setLoginUser(check);
     Toast.show('Đăng nhập thành công!');
     Navigator.pushNamedAndRemoveUntil(
       thisContext,

@@ -1,5 +1,7 @@
+import 'package:flora/getx/auth_state.dart';
 import 'package:flora/widgets/input/search.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../constans/asset.dart';
 import '../constans/color.dart';
 import '../constans/space.dart';
@@ -47,6 +49,8 @@ class ExpandedHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AuthState auth = Get.find();
+
     Widget animatedText = Padding(
       padding: const EdgeInsets.only(left: AppSpace.xs),
       child: AnimatedAlign(
@@ -58,7 +62,7 @@ class ExpandedHeader extends StatelessWidget {
               : const TextStyle(color: Colors.white),
           duration: const Duration(milliseconds: 200),
           child: Text(
-            'Hi, Nhatdote!',
+            'Hi, ${auth.loginUser.value!.fullname}',
             textAlign: !isExpanded ? TextAlign.center : TextAlign.left,
           ),
         ),
@@ -154,15 +158,25 @@ class SliverAppHeader extends StatelessWidget {
 }
 
 class SimpleAppHeader extends StatelessWidget implements PreferredSizeWidget {
-  final String title;
-
   const SimpleAppHeader(
     this.title, {
     super.key,
+    this.leading,
+    this.trailing,
+    this.actions,
+    this.back = true,
   });
+
+  final String title;
+  final Widget? leading;
+  final Widget? trailing;
+  final List<Widget>? actions;
+  final bool back;
 
   @override
   Widget build(BuildContext context) {
+    Widget? leadingWidget = leading ?? (back == false ? Container() : null);
+
     return AppBar(
       title: Text(
         title,
@@ -171,6 +185,8 @@ class SimpleAppHeader extends StatelessWidget implements PreferredSizeWidget {
       iconTheme: const IconThemeData(
         color: AppColor.neutral,
       ),
+      leading: leadingWidget,
+      actions: actions,
       backgroundColor: AppColor.background,
       elevation: 0,
     );

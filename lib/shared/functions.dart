@@ -8,9 +8,13 @@ class Fs {
     return sha256.convert(utf8.encode(text)).toString();
   }
 
-  static String vndFormat(double value) {
-    final format = NumberFormat.currency(locale: 'vi_VN', symbol: 'đ');
-
+  static String vndFormat(double value, {Map<String, dynamic>? options}) {
+    final String symbol = options?['symbol'] ?? 'đ';
+    final format = NumberFormat.currency(locale: 'vi_VN', symbol: symbol);
     return format.format(value);
+  }
+
+  static String getAvatarLetter(String name) {
+    return name.split(' ').last[0];
   }
 }

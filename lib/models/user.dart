@@ -51,7 +51,7 @@ class User {
     }).toSet();
   }
 
-  static bool verify(String phone, String password) {
+  static User? verify(String phone, String password) {
     final Set<User> users = getAll();
     User? user;
 
@@ -63,14 +63,14 @@ class User {
     }
 
     if (user == null) {
-      return false;
+      return null;
     }
 
     if (Fs.hash(password) == user.password) {
-      return true;
+      return user;
     }
 
-    return false;
+    return null;
   }
 
   static Future<bool> store(User user) async {

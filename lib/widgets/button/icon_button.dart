@@ -32,6 +32,8 @@ class AppIconButton extends StatelessWidget {
           ),
           child: Container(
             alignment: Alignment.center,
+            width: size,
+            height: size,
             child: child,
           ),
         ),
