@@ -62,7 +62,7 @@ class _IndexScreenState extends State<IndexScreen> {
       ),
       'icon': Asset.iconPackage,
       'iconActive': Asset.iconPackageSolid,
-      'label': 'Giỏ hàng',
+      'label': 'Đơn hàng',
       'color': Colors.indigoAccent
     },
     {

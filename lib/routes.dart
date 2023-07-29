@@ -10,6 +10,11 @@ import 'package:flora/screens/home/index.dart';
 import 'package:flora/screens/login.dart';
 import 'package:flora/screens/onboarding.dart';
 import 'package:flora/screens/feature/promotion.dart';
+import 'package:flora/screens/profile/profile_favorite.dart';
+import 'package:flora/screens/profile/profile_info.dart';
+import 'package:flora/screens/profile/profile_rank.dart';
+import 'package:flora/screens/profile/profile_setting.dart';
+import 'package:flora/screens/profile/profile_voucher.dart';
 import 'package:flora/screens/register/form.dart';
 import 'package:flora/screens/register/otp.dart';
 import 'package:flora/screens/register/phone.dart';
@@ -20,7 +25,7 @@ import 'package:flora/screens/voucher/voucher_shop.dart';
 import 'package:flutter/material.dart';
 
 class AppRoute {
-  static const String index = '/';
+  static const String index = '/index';
   static const String splash = '/splash';
   static const String onBoarding = '/onboarding';
   static const String registerPhone = '/register/phone';
@@ -38,6 +43,11 @@ class AppRoute {
   static const String designCart = '/design/cart';
   static const String voucherShop = '/voucher/shop';
   static const String voucherFlora = '/voucher/flora';
+  static const String profileRank = '/profile/rank';
+  static const String profileInfo = '/profile/info';
+  static const String profileFavorite = '/profile/favorite';
+  static const String profileVoucher = '/profile/voucher';
+  static const String profileSetting = '/profile/setting';
 
   // Routes is not have any agruments
   static Map<String, Widget> simpleRoutes = {
@@ -56,6 +66,11 @@ class AppRoute {
     designCart: const DesignCartScreen(),
     voucherShop: const VoucherShopScreen(),
     voucherFlora: const VoucherFloraScreen(),
+    profileRank: const ProfileRankScreen(),
+    profileInfo: const ProfileInfoScreen(),
+    profileFavorite: const ProfileFavoriteScreen(),
+    profileVoucher: const ProfileVoucherScreen(),
+    profileSetting: const ProfileSettingScreen(),
   };
 
   // @TODO

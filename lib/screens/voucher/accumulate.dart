@@ -104,7 +104,7 @@ class _AccumulateScreenState extends State<AccumulateScreen> {
                               ),
                               style: AppStyle.textHeading2,
                             ),
-                            Image.asset('assets/images/etc/voucher_coin.png'),
+                            Image.asset(Asset.coin),
                           ],
                         ),
                         const Text('Hết hạn vào 30/04/2023',

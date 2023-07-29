@@ -14,6 +14,9 @@ class Asset {
   static const String headerSmoke2 = 'assets/images/layout/header_smoke2.png';
   static const String floraCamFour = 'assets/images/logo/camera_four.png';
   static const String floraCamLogo = 'assets/images/logo/camera_logo.png';
+  static const String coin = 'assets/images/etc/voucher_coin.png';
+  static const String diamond = 'assets/images/etc/diamond.png';
+  static const String rankedMoney = 'assets/images/etc/ranked_money.png';
 
   static const String iconHome = 'assets/images/icons/home.png';
   static const String iconHomeSolid = 'assets/images/icons/home_solid.png';
@@ -32,4 +35,13 @@ class Asset {
   static const String iconStarSolid = 'assets/images/icons/star_solid.png';
   static const String iconBell = 'assets/images/icons/bell.png';
   static const String iconBellSolid = 'assets/images/icons/bell_solid.png';
+  static const String iconSetting = 'assets/images/icons/setting.png';
+  static const String iconSettingSolid =
+      'assets/images/icons/setting_solid.png';
+  static const String iconHeart = 'assets/images/icons/heart.png';
+  static const String iconHeartSolid = 'assets/images/icons/heart_solid.png';
+  static const String iconDiscount = 'assets/images/icons/discount.png';
+  static const String iconDiscountSolid =
+      'assets/images/icons/discount_solid.png';
+  static const String iconEdit = 'assets/images/icons/edit.png';
 }

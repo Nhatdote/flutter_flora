@@ -1,21 +1,65 @@
 import 'dart:convert';
 import 'package:flora/db.dart';
 import 'package:flora/shared/functions.dart';
+import 'package:path/path.dart';
 
 class User {
-  final String id;
-  final String phone;
-  final String fullname;
-  final String password;
+  String id;
+  String phone;
+  String fullname;
+  String password;
+  String? address;
 
-  const User({
+  User({
     required this.id,
     required this.phone,
     required this.fullname,
     required this.password,
+    this.address,
   });
 
   static const key = 'users';
+
+  dynamic getFieldValue(String field) {
+    switch (field) {
+      case 'fullname':
+        return fullname;
+      case 'phone':
+        return phone;
+      case 'password':
+        return '';
+      case 'address':
+        return address;
+      default:
+        return id;
+    }
+  }
+
+  dynamic setFieldValue(String field, dynamic value) {
+    switch (field) {
+      case 'fullname':
+        fullname = value;
+        break;
+      case 'phone':
+        // phone = value;
+        break;
+      case 'password':
+        password = Fs.hash(value);
+        break;
+      case 'address':
+        address = value;
+        break;
+    }
+
+    List<String> all = User.getAll().map((h) {
+      if (h.id == id) {
+        return toJson();
+      }
+      return h.toJson();
+    }).toList();
+
+    DB.prefs.setStringList(key, all);
+  }
 
   factory User.fromJson(String json) {
     Map<String, dynamic> user = jsonDecode(json);
