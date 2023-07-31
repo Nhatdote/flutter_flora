@@ -64,6 +64,18 @@ class AppButton extends StatelessWidget {
         textColor = disable ? AppColor.neutral40 : AppColor.primary;
 
         break;
+      case btnTypeLight:
+        decoration = BoxDecoration(
+          borderRadius: BorderRadius.circular(25),
+          color: AppColor.primary20,
+          border: Border.all(
+            color: disable ? AppColor.neutral10 : AppColor.primary20,
+          ),
+        );
+
+        textColor = disable ? AppColor.neutral40 : AppColor.primary;
+
+        break;
       default:
         decoration = BoxDecoration(
           borderRadius: BorderRadius.circular(25),

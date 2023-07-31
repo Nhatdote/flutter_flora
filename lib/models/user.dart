@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flora/db.dart';
 import 'package:flora/shared/functions.dart';
-import 'package:path/path.dart';
 
 class User {
   String id;

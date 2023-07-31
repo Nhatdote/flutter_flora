@@ -1,4 +1,5 @@
 import 'package:flora/screens/error.dart';
+import 'package:flora/screens/faq.dart';
 import 'package:flora/screens/feature/design/cart.dart';
 import 'package:flora/screens/feature/design/select_flowers.dart';
 import 'package:flora/screens/feature/design/select_shop.dart';
@@ -12,7 +13,11 @@ import 'package:flora/screens/onboarding.dart';
 import 'package:flora/screens/feature/promotion.dart';
 import 'package:flora/screens/profile/profile_favorite.dart';
 import 'package:flora/screens/profile/profile_info.dart';
+import 'package:flora/screens/profile/profile_language.dart';
+import 'package:flora/screens/profile/profile_notification.dart';
+import 'package:flora/screens/profile/profile_payment.dart';
 import 'package:flora/screens/profile/profile_rank.dart';
+import 'package:flora/screens/profile/profile_security.dart';
 import 'package:flora/screens/profile/profile_setting.dart';
 import 'package:flora/screens/profile/profile_voucher.dart';
 import 'package:flora/screens/register/form.dart';
@@ -48,6 +53,11 @@ class AppRoute {
   static const String profileFavorite = '/profile/favorite';
   static const String profileVoucher = '/profile/voucher';
   static const String profileSetting = '/profile/setting';
+  static const String profileSecure = '/profile/secure';
+  static const String profileNotification = '/profile/notification';
+  static const String profileLanguage = '/profile/language';
+  static const String profilePayment = '/profile/payment';
+  static const String faq = '/faq';
 
   // Routes is not have any agruments
   static Map<String, Widget> simpleRoutes = {
@@ -71,6 +81,11 @@ class AppRoute {
     profileFavorite: const ProfileFavoriteScreen(),
     profileVoucher: const ProfileVoucherScreen(),
     profileSetting: const ProfileSettingScreen(),
+    profileSecure: const ProfileSecurityScreen(),
+    profileNotification: const ProfileNotificationScreen(),
+    profileLanguage: const ProfileLanguageScreen(),
+    profilePayment: const ProfilePaymantScreen(),
+    faq: const FaqScreen(),
   };
 
   // @TODO

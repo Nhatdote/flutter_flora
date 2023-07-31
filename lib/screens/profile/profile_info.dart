@@ -145,19 +145,22 @@ class EditDialog extends StatelessWidget {
       text: loginUser.getFieldValue(editField),
     );
 
+    final Map<String, String> map = {
+      'fullname': 'tên hiển thị',
+      'phone': 'số điện thoại',
+      'password': 'mật khẩu',
+      'address': 'Địa chỉ nhận hàng'
+    };
+
     return AlertDialog(
       elevation: 0,
-      title: Text('Sửa thông tin $editField'),
+      title: Text('Cập nhật ${map[editField]}'),
       content: SizedBox(
         width: MediaQuery.of(context).size.width,
         child: TextField(
           keyboardType: TextInputType.phone,
           controller: controller,
           onChanged: (value) => () {},
-          // decoration: InputDecoration(
-          //   hintText: 'Nhập số điện thoại của bạn',
-          //   errorText: errorTextPhone,
-          // ),
         ),
       ),
       actions: [

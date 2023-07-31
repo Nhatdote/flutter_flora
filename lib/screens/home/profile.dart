@@ -7,9 +7,12 @@ import 'package:flora/constans/style.dart';
 import 'package:flora/getx/auth_state.dart';
 import 'package:flora/routes.dart';
 import 'package:flora/shared/functions.dart';
+import 'package:flora/widgets/button/app_button.dart';
+import 'package:flora/widgets/button/button_constants.dart';
 import 'package:flora/widgets/dot.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -23,62 +26,138 @@ class _ProfileScreen extends State<ProfileScreen> {
   final double headerHeight = 300;
   final double borderRadius = 24.0;
 
-  final List<dynamic> items = [
-    {
-      'icon': Asset.iconUserSolid,
-      'label': 'Thông tin đăng nhập',
-      'route': AppRoute.profileInfo,
-    },
-    {
-      'icon': Asset.iconHomeSolid,
-      'label': 'Yêu thích',
-      'route': null,
-    },
-    {
-      'icon': Asset.iconCouponSolid,
-      'label': 'Ví voucher',
-      'route': null,
-    },
-    {
-      'icon': Asset.iconUserSolid,
-      'label': 'Cài đặt',
-      'route': null,
-    },
-  ];
+  void handleLogout() {
+    showMaterialModalBottomSheet(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(30),
+          topRight: Radius.circular(30),
+        ),
+      ),
+      context: context,
+      builder: (BuildContext context) {
+        return SizedBox(
+          height: 250,
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppSpace.xl,
+                  vertical: AppSpace.sm,
+                ),
+                child: Text(
+                  'Đăng xuất',
+                  style: AppStyle.textHeading2.copyWith(
+                    color: AppColor.primary,
+                  ),
+                ),
+              ),
+              const Divider(),
+              const Padding(
+                padding: EdgeInsets.all(AppSpace.xl),
+                child: Text(
+                  'Bạn thực sự muốn đăng xuất?',
+                  style: AppStyle.textHeading3,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                  left: AppSpace.xl,
+                  right: AppSpace.xl,
+                  bottom: AppSpace.sm + MediaQuery.of(context).padding.bottom,
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: AppButton(
+                        label: 'Thoát',
+                        onTap: () => Navigator.pop(context),
+                        type: btnTypeLight,
+                      ),
+                    ),
+                    const SizedBox(width: AppSpace.xl),
+                    Expanded(
+                      child: AppButton(
+                        label: 'Đăng xuất',
+                        onTap: () {
+                          auth.setLoginUser(null);
+                          Navigator.pushNamedAndRemoveUntil(
+                              context, AppRoute.login, (route) => false);
+                        },
+                      ),
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+    final List<dynamic> items = [
+      {
+        'icon': Asset.iconUserSolid,
+        'label': 'Thông tin đăng nhập',
+        'route': AppRoute.profileInfo,
+      },
+      {
+        'icon': Asset.iconHomeSolid,
+        'label': 'Yêu thích',
+        'route': AppRoute.profileFavorite,
+      },
+      {
+        'icon': Asset.iconCouponSolid,
+        'label': 'Ví voucher',
+        'route': AppRoute.profileVoucher,
+      },
+      {
+        'icon': Asset.iconUserSolid,
+        'label': 'Cài đặt',
+        'route': AppRoute.profileSetting,
+      },
+      {
+        'icon': Asset.iconLogin,
+        'label': 'Đăng xuất',
+        'route': null,
+        'onTap': handleLogout
+      },
+    ];
+
     return Column(
       children: [
         Stack(
           children: [
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(borderRadius),
+                  bottomRight: Radius.circular(borderRadius),
+                ),
+              ),
+              clipBehavior: Clip.hardEdge,
+              width: double.infinity,
+              height: headerHeight,
+              child: Image.asset(
+                'assets/images/avatar.jpg',
+                fit: BoxFit.cover,
+              ),
+            ),
             BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
+              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
               child: Container(
+                width: double.infinity,
+                height: headerHeight,
+                clipBehavior: Clip.hardEdge,
                 decoration: BoxDecoration(
+                  color: const Color.fromRGBO(0, 0, 0, 0.4),
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(borderRadius),
                     bottomRight: Radius.circular(borderRadius),
                   ),
-                ),
-                clipBehavior: Clip.hardEdge,
-                width: double.infinity,
-                height: headerHeight,
-                child: Image.asset(
-                  'assets/images/avatar.jpg',
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-            Container(
-              width: double.infinity,
-              height: headerHeight,
-              clipBehavior: Clip.hardEdge,
-              decoration: BoxDecoration(
-                color: const Color.fromRGBO(0, 0, 0, 0.4),
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(borderRadius),
-                  bottomRight: Radius.circular(borderRadius),
                 ),
               ),
             ),
@@ -165,10 +244,10 @@ class _ProfileScreen extends State<ProfileScreen> {
             child: Column(
               children: items
                   .map((h) => MenuWidget(
-                        icon: h['icon'],
-                        label: h['label'],
-                        route: h['route'],
-                      ))
+                      icon: h['icon'],
+                      label: h['label'],
+                      route: h['route'],
+                      onTap: h['onTap']))
                   .toList(),
             ),
           ),
@@ -179,12 +258,18 @@ class _ProfileScreen extends State<ProfileScreen> {
 }
 
 class MenuWidget extends StatelessWidget {
-  const MenuWidget(
-      {super.key, required this.icon, required this.label, this.route});
+  const MenuWidget({
+    super.key,
+    required this.icon,
+    required this.label,
+    this.route,
+    this.onTap,
+  });
 
   final String icon;
   final String label;
   final String? route;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -195,8 +280,13 @@ class MenuWidget extends StatelessWidget {
         top: AppSpace.xl,
       ),
       child: GestureDetector(
-        onTap:
-            route != null ? () => Navigator.pushNamed(context, route!) : null,
+        onTap: () {
+          if (route != null) {
+            Navigator.pushNamed(context, route!);
+          } else if (onTap != null) {
+            onTap!();
+          }
+        },
         child: Container(
           padding: const EdgeInsets.symmetric(
             vertical: AppSpace.xl,

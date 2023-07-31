@@ -13,6 +13,7 @@ class DB {
   static const skipOnBoarding = 'skipOnBoarding';
   static const users = 'users';
   static const keyLoginUser = 'loginUser';
+  static const keySetting = 'settings';
 
   static SharedPreferences? _prefs;
 

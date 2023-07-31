@@ -44,4 +44,16 @@ class Asset {
   static const String iconDiscountSolid =
       'assets/images/icons/discount_solid.png';
   static const String iconEdit = 'assets/images/icons/edit.png';
+  static const String iconShield = 'assets/images/icons/shield.png';
+  static const String iconShieldSolid = 'assets/images/icons/shield_solid.png';
+  static const String iconGlobal = 'assets/images/icons/global.png';
+  static const String iconGlobalSolid = 'assets/images/icons/global_solid.png';
+  static const String iconCreditCard = 'assets/images/icons/credit_card.png';
+  static const String iconCreditCardSolid =
+      'assets/images/icons/credit_card_solid.png';
+  static const String iconQuestion = 'assets/images/icons/question.png';
+  static const String iconQuestionSolid =
+      'assets/images/icons/question_solid.png';
+  static const String iconLogin = 'assets/images/icons/login.png';
+  static const String iconLogout = 'assets/images/icons/logout.png';
 }
