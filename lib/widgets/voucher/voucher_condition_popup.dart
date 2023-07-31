@@ -21,7 +21,7 @@ class VoucherConditionPopup extends StatelessWidget {
         top: AppSpace.sm,
         left: AppSpace.xl,
         right: AppSpace.xl,
-        bottom: MediaQuery.of(context).padding.bottom,
+        bottom: MediaQuery.of(context).padding.bottom + AppSpace.sm,
       ),
       child: Column(
         children: [
