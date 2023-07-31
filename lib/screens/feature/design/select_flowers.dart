@@ -82,7 +82,7 @@ class _DesignSelectFlowersScreenState extends State<DesignSelectFlowersScreen> {
               padding: const EdgeInsets.symmetric(horizontal: AppSpace.xl),
               width: MediaQuery.of(context).size.width,
               child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   mainAxisSpacing: AppSpace.md,
                   crossAxisSpacing: AppSpace.md,

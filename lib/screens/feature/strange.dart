@@ -212,7 +212,8 @@ class _StrangeScreenState extends State<StrangeScreen>
                   : Expanded(
                       child: GridView.builder(
                         shrinkWrap: true,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
                           crossAxisSpacing: AppSpace.md,
                           mainAxisSpacing: AppSpace.md,

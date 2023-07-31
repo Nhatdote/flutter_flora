@@ -96,7 +96,7 @@ class _PromotionScreenState extends State<PromotionScreen> {
                 child: GridView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: AppSpace.md,
                     mainAxisSpacing: AppSpace.md,

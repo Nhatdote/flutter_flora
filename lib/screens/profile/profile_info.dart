@@ -8,7 +8,6 @@ import 'package:flora/models/user.dart';
 import 'package:flora/shared/toast.dart';
 import 'package:flora/widgets/app_header.dart';
 import 'package:flora/widgets/button/icon_button.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -52,7 +51,7 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
                   label: 'Điện thoại',
                   value: '********${loginUser.phone.substring(8)}',
                   field: 'phone'),
-              InfoWidget(
+              const InfoWidget(
                   label: 'Mật khẩu', value: '********', field: 'password'),
               InfoWidget(
                   label: 'Địa chỉ nhận hàng',

@@ -1,6 +1,5 @@
 import 'package:flora/constans/style.dart';
 import 'package:flora/widgets/app_header.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class FaqScreen extends StatefulWidget {

@@ -2,10 +2,8 @@ import 'package:flora/constans/space.dart';
 import 'package:flora/getx/auth_state.dart';
 import 'package:flora/widgets/app_header.dart';
 import 'package:flora/widgets/setting/setting_radio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:path/path.dart';
 
 class ProfileLanguageScreen extends StatefulWidget {
   const ProfileLanguageScreen({super.key});
